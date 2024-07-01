@@ -9,7 +9,7 @@ import { User } from '../models';
 export class LoginService {
   isLoggedIn: boolean = false;
   checked: boolean = false;
-  private baseURL = 'http://localhost:8080/api';
+  private baseURL = 'http://localhost:8080/api/auth';
 
   constructor(private httpClient: HttpClient) {}
 

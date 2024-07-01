@@ -16,7 +16,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LoginController {
     @Autowired
