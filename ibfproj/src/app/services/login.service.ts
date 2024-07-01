@@ -22,11 +22,15 @@ export class LoginService {
   // }
 
   // create user
-  createUser(credentials: User): Observable<any> {
-    return this.httpClient.post(`${this.baseURL}/createUser`, credentials);
+  createUser(user: User): Observable<any> {
+    return this.httpClient.post(`${this.baseURL}/createUser`, user);
   }
 
   authenticateUser(user: User): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/authenticateUser`, user);
+  }
+
+  signout(): Observable<any> {
+    return this.httpClient.post(`${this.baseURL}/signout`, {});
   }
 }

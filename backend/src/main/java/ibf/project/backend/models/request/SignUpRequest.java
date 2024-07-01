@@ -1,4 +1,4 @@
-package ibf.project.backend.dao.request;
+package ibf.project.backend.models.request;
 
 import java.util.Set;
 

@@ -1,0 +1,24 @@
+<nav class="bg-c1 p-4 ">
+
+     
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo or Brand Name -->
+     
+      <div class="flex items-center space-x-4">
+        <a href="/home" class="text-c2 text-lg font-semibold">  <img src="/assets/logo.png" alt="Logo" class="h-auto w-auto max-h-16"> </a>
+
+      </div>
+  
+      <!-- Navigation Links -->
+      <div class="flex space-x-4">
+        <a href="/chat" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold">Chat</a>
+        <a href="/household" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg  p-4 text-sm font-semibold">Household</a>
+        <a href="/profile" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold">Manage Profile</a>
+    
+      </div>
+      
+      <a href="/addIngredient" class="text-c1 text-2xl bg-c2 font-semibold rounded-full flex items-center justify-center w-12 h-12 hover:bg-c4 hover:text-white">+</a>
+      <!-- Sign Out Button -->
+      <button (click)="signout()" class="ml-4 text-c2 px-3 py-2 rounded-md text-sm font-medium hover:bg-c3 hover:text-white">Sign out</button>
+    </div>
+  </nav>

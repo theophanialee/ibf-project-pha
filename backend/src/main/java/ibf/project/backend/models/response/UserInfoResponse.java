@@ -1,5 +1,4 @@
-package ibf.project.backend.dao.response;
-
+package ibf.project.backend.models.response;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfoResponse {
-    private Long id;
+	private Long id;
 	private String username;
 	private String email;
 	private List<String> roles;

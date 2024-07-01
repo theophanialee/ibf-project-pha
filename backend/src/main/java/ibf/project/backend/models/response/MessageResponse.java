@@ -1,5 +1,4 @@
-package ibf.project.backend.dao.response;
-
+package ibf.project.backend.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
