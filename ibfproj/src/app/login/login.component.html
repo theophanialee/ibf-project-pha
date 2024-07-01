@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-bg1 flex flex-col items-center justify-start min-h-screen">
+    <div class="flex flex-col items-center w-full max-w-md">
+        <!-- Image above the signup form -->
+        <img src="/assets/logo.png" alt="Logo" class="w-2/5 mb-8">
+
+        <!-- Login form -->
+        <div class="bg-bg1 p-8 rounded-lg shadow-lg w-96">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            
+            <form [formGroup]="loginForm" (ngSubmit)="authenticateUser()">
+                <div class="mb-4">
+                    <label for="username" class="block text-c2 font-bold mb-2">Username</label>
+                    <input type="text" id="username" formControlName="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Username" ng-reflect-name="username" autocomplete="current-username">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="password" class="block text-c2 font-bold mb-2">Password</label>
+                    <input type="password" id="password" formControlName="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Password"  ng-reflect-name="password" autocomplete="current-password">
+                </div>
+                
+                <div class="flex items-center justify-between mb-4">
+                    <button class="bg-c2 hover:bg-c2-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Sign In
+                    </button>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <span class="font-bold text-sm text-c2 hover:text-c2-dark mb-2">
+                      Not a kitchen kaki yet?  <a class="underline text-c4" href="/signup">Sign up</a> with us today!
+                    </span>
+                    <a class="font-bold text-sm text-c2 hover:text-c2-dark" href="#">
+                        Forgot Password?
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
