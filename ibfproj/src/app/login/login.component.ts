@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { User } from '../models';
+import { HttpResponse } from '@angular/common/http'; // Import HttpResponse
+import { JwtauthService } from '../services/jwtauth.service';
+import { AuthResponse } from '../../models/authresponse.interface';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private loginSvc: LoginService
+    private loginSvc: LoginService,
+    private jwtAuthSvc: JwtauthService
   ) {}
 
   ngOnInit(): void {
@@ -33,18 +37,33 @@ export class LoginComponent implements OnInit {
       const user: User = this.loginForm.value;
 
       this.loginSvc.authenticateUser(user).subscribe({
-        next: (data) => {
-          console.log('User authenticated', data);
-          if (data.isExist) {
-            this.router.navigate(['/home']);
+        next: (response: AuthResponse) => {
+          // Use the interface here
+          console.log('User authenticated', response);
+
+          if (response.isExist) {
+            // Check if the user exists
+            // Extract JWT token from response body
+            const jwtToken = response.kitchenkakisJWT;
+            console.log('JWT Token:', jwtToken);
+
+            if (jwtToken) {
+              // Save JWT token using JwtauthService
+              this.jwtAuthSvc.saveToken(jwtToken);
+
+              // Navigate to home page upon successful authentication
+              this.router.navigate(['/home']);
+            } else {
+              alert('JWT Token is missing in the response.');
+            }
           } else {
             alert('Authentication failed. Please check your credentials.');
             this.loginForm.reset(); // Reset the form on authentication failure
           }
         },
         error: (error) => {
-          alert('Authentication failed. Please check your credentials.');
-          console.error(error);
+          alert('Error occurred during authentication. Please try again.');
+          console.error('Authentication Error:', error);
           this.loginForm.reset(); // Reset the form on error
         },
       });

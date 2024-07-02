@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { JwtauthService } from '../services/jwtauth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,18 +12,29 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   signupComplete = false;
 
-  constructor(private loginSvc: LoginService, private router: Router) {}
+  constructor(
+    private loginSvc: LoginService,
+    private router: Router,
+    private jwtAuthSvc: JwtauthService
+  ) {}
 
-  signout(): void {
-    this.loginSvc.signout().subscribe(
-      () => {
-        console.log('Successfully signed out');
-        this.signupComplete = true; // Display "Signup complete" message or handle as needed
+  signout(): Observable<any> {
+    const signoutObservable = this.loginSvc.signout();
+    signoutObservable.subscribe({
+      next: (response: any) => {
+        console.log('Signout response:', response);
+
+        if (response.isSignedOut === true) {
+          this.jwtAuthSvc.removeToken();
+          this.signupComplete = true; // Display "Signup complete" message or handle as needed
+          this.router.navigate(['/login']); // Redirect to login page after signout
+        }
       },
-      (error) => {
+      error: (error) => {
         console.error('Failed to sign out', error);
-        // Handle error, e.g., display error message to user
-      }
-    );
+      },
+    });
+
+    return signoutObservable;
   }
 }

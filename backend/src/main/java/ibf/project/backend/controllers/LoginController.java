@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -42,22 +43,22 @@ public class LoginController {
     }
 
     @PostMapping(path = "/authenticateUser")
-    public ResponseEntity<String> authenticateUser(@RequestBody User loginUser) {
+    public ResponseEntity<String> authenticateUser(@RequestBody User loginUser, HttpServletResponse response) {
         boolean isExist = userSvc.authenticateUser(loginUser);
 
         if (isExist) {
 
             System.out.println("user exists");
             // Generate JWT cookie
-            ResponseCookie jwtCookie = jwtService.generateJwtCookie(loginUser);
+            String jwt = jwtService.generateJwtCookie(loginUser, response);
 
             // Return response with JWT cookie
             JsonObject jsonObj = Json.createObjectBuilder()
                     .add("isExist", true)
+                    .add("kitchenkakisJWT", jwt)
                     .build();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                     .body(jsonObj.toString());
         } else {
             JsonObject jsonObj = Json.createObjectBuilder()
@@ -75,9 +76,12 @@ public class LoginController {
         ResponseCookie cleanCookie = jwtService.signout(request, response);
 
         // Optionally, you may invalidate the session or perform additional cleanup
+        JsonObject jsonObj = Json.createObjectBuilder()
+                .add("isSignedOut", true)
+                .build();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cleanCookie.toString())
-                .body("User signed out successfully");
+                .body(jsonObj.toString());
     }
 }

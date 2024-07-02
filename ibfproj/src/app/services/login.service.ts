@@ -1,32 +1,24 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { User } from '../models';
+import { AuthResponse } from '../../models/authresponse.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  isLoggedIn: boolean = false;
-  checked: boolean = false;
   private baseURL = 'http://localhost:8080/api/auth';
+  isLoggedIn: boolean = false;
 
   constructor(private httpClient: HttpClient) {}
 
-  // checkLogin() {
-  //   const storage = localStorage.getItem('jwt');
-  //   if (storage == null) return;
-  //   // console.log('>>> jwt retrieved: ', storage);
-  //   this.isLoggedIn = true;
-  //   this.checked = true;
-  // }
-
-  // create user
   createUser(user: User): Observable<any> {
     return this.httpClient.post(`${this.baseURL}/createUser`, user);
   }
 
-  authenticateUser(user: User): Observable<any> {
+  authenticateUser(user: User): Observable<AuthResponse> {
     return this.httpClient.post<any>(`${this.baseURL}/authenticateUser`, user);
   }
 

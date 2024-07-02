@@ -41,16 +41,19 @@ public class JwtService {
     @Value("${token.app.jwtCookieName}")
     private String jwtCookieName;
 
-    public ResponseCookie generateJwtCookie(User userPrincipal) {
+    public String generateJwtCookie(User userPrincipal, HttpServletResponse response) {
         String jwt = generateToken(userPrincipal);
         System.out.println("Generated JWT for user: " + userPrincipal.getUsername() + " - " + jwt);
 
-        ResponseCookie cookie = ResponseCookie.from(jwtCookieName, jwt)
-                .path("/")
-                .maxAge(24 * 60 * 60) // 24 hours
-                .httpOnly(true)
-                .build();
-        return cookie;
+        Cookie cookieApp = new Cookie("kitchenkakisjwt", jwt);
+        cookieApp.setMaxAge(24 * 60 * 60); // 24 hours
+        cookieApp.setPath("/"); // Set appropriate path
+        cookieApp.setHttpOnly(true); // Mark the cookie as HttpOnly for security
+        cookieApp.setSecure(true); // Ensure this is set if served over HTTPS
+
+        response.addCookie(cookieApp);
+
+        return jwt;
     }
 
     public String getJwtFromCookies(HttpServletRequest request) {
