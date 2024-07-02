@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class JwtService {
 
     public ResponseCookie generateJwtCookie(User userPrincipal) {
         String jwt = generateToken(userPrincipal);
+        System.out.println("Generated JWT for user: " + userPrincipal.getUsername() + " - " + jwt);
+
         ResponseCookie cookie = ResponseCookie.from(jwtCookieName, jwt)
                 .path("/")
                 .maxAge(24 * 60 * 60) // 24 hours

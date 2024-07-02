@@ -71,7 +71,6 @@ public class LoginController {
     @PostMapping("/signout")
     public ResponseEntity<String> signout(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println(request + "\n" + response);
         // Remove JWT cookie from the client
         ResponseCookie cleanCookie = jwtService.signout(request, response);
 

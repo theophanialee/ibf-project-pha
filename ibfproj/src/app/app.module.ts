@@ -10,7 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { IngredientComponent } from './ingredient/ingredient.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'inventory/add', component: InventoryComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
@@ -29,7 +30,7 @@ const appRoutes: Routes = [
     SignupComponent,
     HomeComponent,
     NavbarComponent,
-    IngredientComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule,
