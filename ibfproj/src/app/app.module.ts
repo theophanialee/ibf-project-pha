@@ -13,8 +13,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './guards/auth.guard';
-import { RoutesService } from './services/routes.service';
 import { JwtauthService } from './services/jwtauth.service';
+import { HouseholdComponent } from './household/household.component';
+import { InventoryListComponent } from './inventory.list/inventory.list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -23,11 +24,21 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   {
+    path: 'households',
+    component: HouseholdComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inventory',
+    component: InventoryListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'inventory/add',
     component: InventoryComponent,
     canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirect invalid routes to /login
 ];
 
 @NgModule({
@@ -39,6 +50,8 @@ const appRoutes: Routes = [
     HomeComponent,
     NavbarComponent,
     InventoryComponent,
+    HouseholdComponent,
+    InventoryListComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +59,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [AuthGuard, CookieService, JwtauthService, RoutesService],
+  providers: [AuthGuard, CookieService, JwtauthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

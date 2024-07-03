@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
       this.loginSvc.authenticateUser(user).subscribe({
         next: (response: AuthResponse) => {
-          // Use the interface here
           console.log('User authenticated', response);
 
           if (response.isExist) {
@@ -48,23 +47,20 @@ export class LoginComponent implements OnInit {
             console.log('JWT Token:', jwtToken);
 
             if (jwtToken) {
-              // Save JWT token using JwtauthService
               this.jwtAuthSvc.saveToken(jwtToken);
-
-              // Navigate to home page upon successful authentication
               this.router.navigate(['/home']);
             } else {
               alert('JWT Token is missing in the response.');
             }
           } else {
             alert('Authentication failed. Please check your credentials.');
-            this.loginForm.reset(); // Reset the form on authentication failure
+            this.loginForm.reset();
           }
         },
         error: (error) => {
           alert('Error occurred during authentication. Please try again.');
           console.error('Authentication Error:', error);
-          this.loginForm.reset(); // Reset the form on error
+          this.loginForm.reset();
         },
       });
     } else {

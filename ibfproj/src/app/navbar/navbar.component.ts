@@ -18,14 +18,6 @@ export class NavbarComponent {
     private jwtAuthSvc: JwtauthService
   ) {}
 
-  isLoggedIn: boolean = false;
-
-  ngOnInit(): void {
-    this.jwtAuthSvc.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-    });
-  }
-
   signout(): void {
     this.loginSvc
       .signout()

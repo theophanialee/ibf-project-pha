@@ -1,27 +1,23 @@
-// jwt-authentication.service.ts
-
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject } from 'rxjs';
-import { RoutesService } from './routes.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JwtauthService {
   private tokenKey = 'kitchenkakisJWT';
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    private cookieService: CookieService,
-    private routesSvc: RoutesService
-  ) {}
+  constructor(private cookieService: CookieService) {
+    // Initialize authentication state based on token presence
+    this.isAuthenticatedSubject.next(this.getToken() !== '');
+  }
 
   // Save JWT token to cookie
   saveToken(token: string): void {
-    this.cookieService.set(this.tokenKey, token, { expires: 1, path: '/' }); // expires in 1 day
-    this.isLoggedInSubject.next(true);
+    this.cookieService.set(this.tokenKey, token, { expires: 1, path: '/' });
+    this.isAuthenticatedSubject.next(true); // Update authentication state
   }
 
   // Retrieve JWT token from cookie
@@ -31,14 +27,12 @@ export class JwtauthService {
 
   // Remove JWT token from cookie
   removeToken(): void {
-    this.cookieService.delete(this.tokenKey, '/', 'localhost');
-    this.isLoggedInSubject.next(false);
+    this.cookieService.delete(this.tokenKey, '/');
+    this.isAuthenticatedSubject.next(false); // Update authentication state
   }
 
   // Check if user is authenticated (token present and valid)
-  isAuthenticated(): boolean {
-    const token = this.getToken();
-    // Example validation logic (you may want to decode and verify the token)
-    return token !== undefined && token !== '';
+  isAuthenticated(): Observable<boolean> {
+    return this.isAuthenticatedSubject.asObservable();
   }
 }
