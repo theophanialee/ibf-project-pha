@@ -22,7 +22,7 @@ export class AuthGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.jwtService.isAuthenticated()) {
+    if (this.jwtService.getToken()) {
       return true; // User is authenticated, allow access
     } else {
       // User is not authenticated, redirect to login page

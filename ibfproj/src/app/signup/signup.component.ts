@@ -37,7 +37,8 @@ export class SignupComponent implements OnInit {
       this.loginSvc.createUser(user).subscribe({
         next: (data) => {
           console.log('User saved', data);
-          this.router.navigate(['/home']);
+          alert('Successfully signed up! Please proceed to login.');
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           alert('Error in saving user');

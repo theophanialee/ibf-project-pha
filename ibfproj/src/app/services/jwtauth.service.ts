@@ -10,7 +10,6 @@ export class JwtauthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private cookieService: CookieService) {
-    // Initialize authentication state based on token presence
     this.isAuthenticatedSubject.next(this.getToken() !== '');
   }
 
