@@ -13,6 +13,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './guards/auth.guard';
+import { RoutesService } from './services/routes.service';
+import { JwtauthService } from './services/jwtauth.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -44,7 +46,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [AuthGuard, CookieService],
+  providers: [AuthGuard, CookieService, JwtauthService, RoutesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
-import { User } from '../models';
+import { AuthResponse, User } from '../models';
 import { HttpResponse } from '@angular/common/http'; // Import HttpResponse
 import { JwtauthService } from '../services/jwtauth.service';
-import { AuthResponse } from '../../models/authresponse.interface';
+
 
 @Component({
   selector: 'app-login',
