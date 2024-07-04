@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
@@ -12,10 +12,14 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { JwtauthService } from './services/jwtauth.service';
 import { HouseholdComponent } from './household/household.component';
 import { InventoryListComponent } from './inventory.list/inventory.list.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './auth/auth.reducers';
+import { IngredientSearchComponent } from './ingredient-search/ingredient-search.component';
+import { ProductService } from './services/product.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -31,6 +35,11 @@ const appRoutes: Routes = [
   {
     path: 'inventory',
     component: InventoryListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inventory/search',
+    component: IngredientSearchComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -52,14 +61,16 @@ const appRoutes: Routes = [
     InventoryComponent,
     HouseholdComponent,
     InventoryListComponent,
+    IngredientSearchComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    StoreModule.forRoot({ auth: authReducer }),
   ],
-  providers: [AuthGuard, CookieService, JwtauthService],
+  providers: [AuthGuard, CookieService, JwtauthService, ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
