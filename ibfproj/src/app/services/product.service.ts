@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { ProductDetails } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,11 @@ export class ProductService {
   private app_id = 'c9c9375a';
   private app_key = '320281746675f9de7f8c50025d2fabe5';
 
+  private backendURL = 'http://localhost:8080/api';
+
   constructor(private httpClient: HttpClient) {}
 
-  searchIngredient(ingredient: string): Observable<any[]> {
+  searchIngredient(ingredient: string): Observable<ProductDetails[]> {
     const url = `${this.baseURL}/food-database/v2/parser?app_id=${this.app_id}&app_key=${this.app_key}&ingr=${ingredient}`;
 
     return this.httpClient.get<any>(url).pipe(
@@ -24,17 +27,22 @@ export class ProductService {
             label: item.food.label,
             image: item.food.image,
             brand: item.food.brand,
-            servingSizes: item.measures
+            servingSizeWeight: item.measures
               .filter((measure: any) => measure.label === 'Serving')
-              .map((measure: any) => ({
-                label: measure.label,
-                weight: Math.round(measure.weight),
-              })),
+              .map((measure: any) => Math.round(measure.weight))[0], // Get the first serving size weight
           }))
           .filter((product: any) => {
-            return product.servingSizes.length > 0 && !!product.brand;
+            return !!product.servingSizeWeight && !!product.brand;
           })
-      )
+      ),
+      tap((products: ProductDetails[]) => {
+        // Send products to backend for storage
+        this.storeProductsInBackend(products).subscribe();
+      })
     );
+  }
+
+  private storeProductsInBackend(products: ProductDetails[]): Observable<any> {
+    return this.httpClient.post(`${this.backendURL}/products/cache`, products);
   }
 }

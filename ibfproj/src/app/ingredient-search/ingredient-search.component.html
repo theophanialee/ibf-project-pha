@@ -43,8 +43,8 @@
           <p class="text-c2 italic">{{ p.brand }}</p>
         </div>
         <div class="mt-2 flex-grow">
-          <h4 class="text-c2" *ngFor="let serving of p.servingSizes">Serving Size: {{ serving.weight }}g</h4>
-        </div>
+            <h4 class="text-c2">Serving Size: {{ p.servingSizeWeight }}g</h4>
+        </div>          
         <div class="mt-4 flex justify-end">
           <button class="text-c1 text-2xl bg-c2 font-semibold rounded-full w-12 h-12 flex items-center justify-center hover:bg-c4 hover:text-white">
             +

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { ProductDetailsList } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductDetails } from '../models';
 
 @Component({
   selector: 'app-ingredient-search',
@@ -11,8 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class IngredientSearchComponent implements OnInit {
   searchForm: FormGroup;
-  productList: ProductDetailsList[] = [];
-  searchPerformed: boolean = false;
+  productList: ProductDetails[] = [];
+  searchPerformed = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +37,7 @@ export class IngredientSearchComponent implements OnInit {
     if (ingredient) {
       this.productSvc
         .searchIngredient(ingredient)
-        .subscribe((data: ProductDetailsList[]) => {
+        .subscribe((data: ProductDetails[]) => {
           this.productList = data;
           this.searchPerformed = true;
         });

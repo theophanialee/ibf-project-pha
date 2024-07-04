@@ -22,13 +22,10 @@ export const reducers: ActionReducerMap<AppState> = {
   // Define other reducers here if needed
 };
 
-export interface ProductDetailsList {
+export interface ProductDetails {
   foodId: string;
   label: string;
   image: string;
   brand: string;
-  servingSizes: {
-    label: string;
-    weight: number;
-  }[];
+  servingSizeWeight: number; // Single serving size weight
 }
