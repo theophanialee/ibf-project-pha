@@ -22,6 +22,7 @@ import { ProductService } from './services/product.service';
 import { InventoryFormComponent } from './inventory-form/inventory-form.component';
 import { productReducer } from './states/product/product.reducer';
 
+
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -41,6 +42,11 @@ const appRoutes: Routes = [
   {
     path: 'ingredient/search',
     component: IngredientSearchComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inventory/add/:foodId',
+    component: InventoryFormComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirect invalid routes to /login

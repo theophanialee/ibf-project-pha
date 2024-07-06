@@ -3,6 +3,9 @@ import { ProductService } from '../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductDetails } from '../models';
+import { ProductState } from '../states/product/product.state';
+import { Store } from '@ngrx/store';
+import { setSelectedProduct } from '../states/product/product.actions';
 
 @Component({
   selector: 'app-ingredient-search',
@@ -19,7 +22,8 @@ export class IngredientSearchComponent implements OnInit {
     private fb: FormBuilder,
     private productSvc: ProductService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private store: Store<{ product: ProductState }>
   ) {
     this.searchForm = this.fb.group({
       ingredient: ['', Validators.required],
@@ -54,7 +58,9 @@ export class IngredientSearchComponent implements OnInit {
   // Method to handle when a product is selected
   onSelectProduct(product: ProductDetails) {
     this.selectedProduct = product;
-    // Navigate to InventoryComponent with the selected product's ID as a route parameter
-    this.router.navigate(['/inventory', product.foodId]);
+    this.store.dispatch(setSelectedProduct({ product: product }));
+
+    console.log('route to add foodid: ', product.foodId);
+    this.router.navigate(['/inventory/add', product.foodId]);
   }
 }

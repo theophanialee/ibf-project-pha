@@ -1,16 +1,9 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ProductDetails } from '../../models';
 
 export interface ProductState {
-  selectedProduct: any;
+  selectedProduct: ProductDetails | null;
 }
 
 export const initialState: ProductState = {
   selectedProduct: null,
 };
-
-export const getProductState = createFeatureSelector<ProductState>('product');
-
-export const getSelectedProduct = createSelector(
-  getProductState,
-  (state: ProductState) => state.selectedProduct
-);

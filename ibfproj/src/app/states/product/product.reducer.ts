@@ -1,19 +1,23 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { initialState, ProductState } from './product.state';
-import { clearSelectedProduct, setSelectedProduct } from './product.action';
+import * as ProductActions from './product.actions';
 
-const _productReducer = createReducer(
+export const productReducer = createReducer(
   initialState,
-  on(setSelectedProduct, (state, { product }) => ({
+
+  on(ProductActions.setSelectedProduct, (state, { product }) => ({
     ...state,
     selectedProduct: product,
   })),
-  on(clearSelectedProduct, (state) => ({ ...state, selectedProduct: null }))
+
+  on(ProductActions.clearSelectedProduct, (state) => ({
+    ...state,
+    selectedProduct: null,
+  }))
+
+  // Add more reducers as needed
 );
 
-export function productReducer(
-  state: ProductState | undefined,
-  action: Action
-) {
-  return _productReducer(state, action);
+export function reducer(state: ProductState | undefined, action: any) {
+  return productReducer(state, action);
 }
