@@ -1,5 +1,5 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { authReducer, AuthState } from './auth/auth.reducers';
+import { authReducer, AuthState } from './states/auth/auth.state';
 
 export interface User {
   username: string;

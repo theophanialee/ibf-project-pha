@@ -16,4 +16,8 @@ public class ProductService {
     public void saveAllProducts(List<ProductDetails> products) {
         productRepo.saveAllProducts(products);
     }
+
+    public List<ProductDetails> findProductsByIngredient(String ingredient) {
+        return productRepo.findProductsByIngredient(ingredient);
+    }
 }

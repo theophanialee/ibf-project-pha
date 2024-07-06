@@ -1,4 +1,4 @@
-<body class="p-6">
+
   <div class="max-w-lg mx-auto bg-c1 p-8 rounded-lg shadow-md">
     <h1 class="block text-c2 font-semibold text-lg text-center">Add an ingredient</h1>
     <form [formGroup]="searchForm" (ngSubmit)="search()" class="space-y-4">
@@ -46,9 +46,11 @@
             <h4 class="text-c2">Serving Size: {{ p.servingSizeWeight }}g</h4>
         </div>          
         <div class="mt-4 flex justify-end">
-          <button class="text-c1 text-2xl bg-c2 font-semibold rounded-full w-12 h-12 flex items-center justify-center hover:bg-c4 hover:text-white">
-            +
-          </button>
+            <div class="mt-4 flex justify-end">
+                <button class="text-c1 text-2xl bg-c2 font-semibold rounded-full w-12 h-12 flex items-center justify-center hover:bg-c4 hover:text-white"
+                        (click)="onSelectProduct(p)">
+                  +
+                </button>
         </div>
       </div>
     </div>
@@ -58,4 +60,4 @@
   <div *ngIf="productList.length === 0 && searchPerformed" class="mt-6 text-center">
     <h2 class="text-c2 font-semibold text-lg">No results found</h2>
   </div>
-</body>
+

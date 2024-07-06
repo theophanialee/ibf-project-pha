@@ -6,7 +6,7 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JwtauthService } from '../services/jwtauth.service';
+import { JwtauthService } from '../../services/jwtauth.service';
 
 @Injectable({
   providedIn: 'root',

@@ -13,6 +13,7 @@ export class IngredientSearchComponent implements OnInit {
   searchForm: FormGroup;
   productList: ProductDetails[] = [];
   searchPerformed = false;
+  selectedProduct: any;
 
   constructor(
     private fb: FormBuilder,
@@ -48,5 +49,12 @@ export class IngredientSearchComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     }
+  }
+
+  // Method to handle when a product is selected
+  onSelectProduct(product: ProductDetails) {
+    this.selectedProduct = product;
+    // Navigate to InventoryComponent with the selected product's ID as a route parameter
+    this.router.navigate(['/inventory', product.foodId]);
   }
 }

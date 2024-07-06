@@ -10,16 +10,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { InventoryComponent } from './inventory/inventory.component';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './states/auth/auth.guard';
 import { JwtauthService } from './services/jwtauth.service';
 import { HouseholdComponent } from './household/household.component';
 import { InventoryListComponent } from './inventory.list/inventory.list.component';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './auth/auth.reducers';
+import { authReducer } from './states/auth/auth.state';
 import { IngredientSearchComponent } from './ingredient-search/ingredient-search.component';
 import { ProductService } from './services/product.service';
+import { InventoryFormComponent } from './inventory-form/inventory-form.component';
+import { productReducer } from './states/product/product.reducer';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -38,13 +39,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'inventory/search',
+    path: 'ingredient/search',
     component: IngredientSearchComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'inventory/add',
-    component: InventoryComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirect invalid routes to /login
@@ -58,17 +54,17 @@ const appRoutes: Routes = [
     SignupComponent,
     HomeComponent,
     NavbarComponent,
-    InventoryComponent,
     HouseholdComponent,
     InventoryListComponent,
     IngredientSearchComponent,
+    InventoryFormComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    StoreModule.forRoot({ auth: authReducer }),
+    StoreModule.forRoot({ auth: authReducer, product: productReducer }),
   ],
   providers: [AuthGuard, CookieService, JwtauthService, ProductService],
   bootstrap: [AppComponent],

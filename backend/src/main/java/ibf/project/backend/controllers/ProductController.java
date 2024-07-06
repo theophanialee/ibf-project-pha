@@ -18,4 +18,10 @@ public class ProductController {
     public void saveProducts(@RequestBody List<ProductDetails> products) {
         productSvc.saveAllProducts(products);
     }
+
+    @GetMapping("/check")
+    public List<ProductDetails> getProductsByIngredient(@RequestParam("ingr") String ingredient) {
+        return productSvc.findProductsByIngredient(ingredient);
+    }
+
 }

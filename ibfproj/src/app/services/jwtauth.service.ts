@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../auth/auth.actions';
+import * as AuthActions from '../states/auth/auth.actions';
 import { Observable } from 'rxjs';
 import { AppState } from '../models';
 

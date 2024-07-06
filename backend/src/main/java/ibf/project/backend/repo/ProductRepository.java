@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-// import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -15,8 +15,8 @@ import ibf.project.backend.models.ProductDetails;
 @Repository
 public class ProductRepository {
 
-    // @Autowired
-    // private MongoTemplate mongoTemplate;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private MongoOperations mongoOperations;
@@ -38,5 +38,11 @@ public class ProductRepository {
         }
 
         return anyChanges;
+    }
+
+    public List<ProductDetails> findProductsByIngredient(String ingredient) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("label").regex(ingredient, "i"));
+        return mongoTemplate.find(query, ProductDetails.class);
     }
 }
