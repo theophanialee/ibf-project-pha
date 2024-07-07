@@ -29,3 +29,10 @@ export interface ProductDetails {
   brand: string;
   servingSizeWeight: number; // Single serving size weight
 }
+
+export interface Household {
+  household_id: string;
+  name: string;
+  description: string;
+  last_edited: Date;
+}

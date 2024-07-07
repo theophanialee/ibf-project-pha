@@ -13,7 +13,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './states/auth/auth.guard';
 import { JwtauthService } from './services/jwtauth.service';
-import { HouseholdComponent } from './household/household.component';
 import { InventoryListComponent } from './inventory.list/inventory.list.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './states/auth/auth.state';
@@ -21,7 +20,9 @@ import { IngredientSearchComponent } from './ingredient-search/ingredient-search
 import { ProductService } from './services/product.service';
 import { InventoryFormComponent } from './inventory-form/inventory-form.component';
 import { productReducer } from './states/product/product.reducer';
-
+import { HouseholdComponent } from './household/household.component';
+import { HouseholdService } from './services/household.service';
+import { householdReducer } from './states/household/household.reducer';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -70,9 +71,19 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    StoreModule.forRoot({ auth: authReducer, product: productReducer }),
+    StoreModule.forRoot({
+      auth: authReducer,
+      product: productReducer,
+      household: householdReducer,
+    }),
   ],
-  providers: [AuthGuard, CookieService, JwtauthService, ProductService],
+  providers: [
+    AuthGuard,
+    CookieService,
+    JwtauthService,
+    ProductService,
+    HouseholdService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
