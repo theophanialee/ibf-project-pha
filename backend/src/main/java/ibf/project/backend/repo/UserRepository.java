@@ -18,8 +18,8 @@ public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final String SQL_SAVE_CREDS = "INSERT INTO user (user_id, username, email, password) VALUES (?, ?, ?, ?)";
-    private static final String SQL_FIND_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
+    private final String SQL_SAVE_CREDS = "INSERT INTO usesr (user_id, username, email, password) VALUES (?, ?, ?, ?)";
+    private final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
 
 public boolean createUser(User createUser) {
     String userId = UUID.randomUUID().toString().substring(0, 8);

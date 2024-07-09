@@ -15,3 +15,8 @@ export const createHouseholdFailure = createAction(
   '[Household] Create Household Failure',
   props<{ error: any }>()
 );
+
+export const storeHouseholdId = createAction(
+  '[Household] Store Household ID',
+  props<{ householdId: string }>()
+);

@@ -45,10 +45,11 @@ export class LoginComponent implements OnInit {
             // Extract JWT token from response body
             const jwtToken = response.kitchenkakisJWT;
             console.log('JWT Token:', jwtToken);
+            const userId = response.userId;
 
-            if (jwtToken) {
-              this.jwtAuthSvc.saveToken(jwtToken);
-              this.router.navigate(['/home']);
+            if (jwtToken && userId) {
+              this.jwtAuthSvc.saveToken(jwtToken, userId);
+              this.router.navigate(['/household']);
             } else {
               alert('JWT Token is missing in the response.');
             }

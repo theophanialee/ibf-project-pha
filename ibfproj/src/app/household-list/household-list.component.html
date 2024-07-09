@@ -1,0 +1,16 @@
+<div *ngIf="!(households$ | async)?.length" class="text-center text-c3">
+  No household found.
+  </div>
+  <div *ngFor="let household of households$ | async" class="mb-4">
+    <a
+      (click)="selectHousehold(household.householdId)"
+      [routerLink]="['/household', 'manage', household.householdId]"
+      class="no-underline"
+    >
+      <div class="bg-bg1 shadow-md rounded-lg p-4 cursor-pointer">
+        <h2 class="text-lg font-semibold text-c2">{{ household.name }}</h2>
+        <p class="text-c2">{{ household.description }}</p>
+      </div>
+    </a>
+  </div>
+

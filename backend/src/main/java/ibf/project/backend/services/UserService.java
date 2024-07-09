@@ -22,13 +22,13 @@ public class UserService {
         return userRepo.createUser(createUser);
     }
 
-    public boolean authenticateUser(User loginUser) {
+    public String authenticateUser(User loginUser) {
         User existingUser = userRepo.findUserByUsername(loginUser.getUsername()).orElse(null);
         if (existingUser != null) {
-            boolean matches = passwordEncoder.matches(loginUser.getPassword(), existingUser.getPassword());
-            return matches;
+            passwordEncoder.matches(loginUser.getPassword(), existingUser.getPassword());
+            return existingUser.getUserId();
         }
-        return false;
+        return null;
     }
 
 }

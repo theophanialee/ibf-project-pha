@@ -1,0 +1,27 @@
+<div class="max-w-lg mx-auto bg-c1 p-8 rounded-lg shadow-md">
+    <h1 class="text-c2 font-semibold text-lg text-center mb-6">Create Household</h1>
+  
+    <form [formGroup]="householdForm" (ngSubmit)="onSubmit()">
+      <!-- Household Name -->
+      <div class="mb-4">
+        <label for="name" class="block text-c2  font-medium">Household Name:</label>
+        <input type="text" id="name" formControlName="name" class="mt-1 block w-full border-gray-300 rounded-md p-2">
+        <div *ngIf="householdForm.get('name')?.invalid && (householdForm.get('name')?.dirty || householdForm.get('name')?.touched)" class="text-red-600">
+          Household name is required
+        </div>
+      </div>
+  
+      <!-- Household Description -->
+      <div class="mb-4">
+        <label for="description" class="block text-c2 font-medium">Description:</label>
+        <textarea id="description" formControlName="description" class="mt-1 block w-full border-gray-300 rounded-md p-2"></textarea>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="householdForm.invalid"  class="w-full bg-c2 text-white py-2 px-4 rounded-md shadow-sm hover:bg-c4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 font-semibold"
+      >
+        Add
+      </button>
+    </form>
+  </div>
+  

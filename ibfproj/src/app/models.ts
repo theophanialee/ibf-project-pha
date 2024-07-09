@@ -9,6 +9,7 @@ export interface User {
 
 export interface AuthResponse {
   isExist: boolean;
+  userId: string;
   kitchenkakisJWT: string;
 }
 
@@ -31,8 +32,8 @@ export interface ProductDetails {
 }
 
 export interface Household {
-  household_id: string;
+  householdId: string;
   name: string;
   description: string;
-  last_edited: Date;
+  lastEdited: Date;
 }

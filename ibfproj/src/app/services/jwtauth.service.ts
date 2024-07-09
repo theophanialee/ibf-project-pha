@@ -12,6 +12,7 @@ import { AppState } from '../models';
 })
 export class JwtauthService {
   private tokenKey = 'kitchenkakisJWT';
+  private userIdKey = 'userId';
 
   constructor(
     private cookieService: CookieService,
@@ -25,8 +26,10 @@ export class JwtauthService {
   }
 
   // Save JWT token to cookie and update state
-  saveToken(token: string): void {
+  saveToken(token: string, userId: string): void {
     this.cookieService.set(this.tokenKey, token, { expires: 1, path: '/' });
+    localStorage.setItem(this.userIdKey, userId);
+    console.log('User ID saved:', userId);
     this.store.dispatch(AuthActions.login({ token }));
   }
 
@@ -38,11 +41,18 @@ export class JwtauthService {
   // Remove JWT token from cookie and update state
   removeToken(): void {
     this.cookieService.delete(this.tokenKey, '/');
+    localStorage.removeItem(this.userIdKey);
     this.store.dispatch(AuthActions.logout());
   }
 
   // Check if user is authenticated (token present and valid)
   isAuthenticated(): Observable<boolean> {
     return this.store.select((state) => state.auth.isAuthenticated);
+  }
+
+  getUserId(): string | null {
+    const userId = localStorage.getItem(this.userIdKey);
+    console.log('Retrieved User ID:', userId); // Debugging line
+    return userId;
   }
 }

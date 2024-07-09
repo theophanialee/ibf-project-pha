@@ -23,6 +23,9 @@ import { productReducer } from './states/product/product.reducer';
 import { HouseholdComponent } from './household/household.component';
 import { HouseholdService } from './services/household.service';
 import { householdReducer } from './states/household/household.reducer';
+import { HouseholdListComponent } from './household-list/household-list.component';
+import { HouseholdGuard } from './states/household/household.guard';
+import { HouseholdAddComponent } from './household-add/household-add.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -31,25 +34,36 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   {
-    path: 'households',
+    path: 'household',
     component: HouseholdComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'inventory',
-    component: InventoryListComponent,
+    path: 'household/list',
+    component: HouseholdListComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'household/add',
+    component: HouseholdAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'inventory/list',
+    component: InventoryListComponent,
+    canActivate: [AuthGuard, HouseholdGuard],
   },
   {
     path: 'ingredient/search',
     component: IngredientSearchComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, HouseholdGuard],
   },
   {
     path: 'inventory/add/:foodId',
     component: InventoryFormComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, HouseholdGuard],
   },
+
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirect invalid routes to /login
 ];
 
@@ -65,6 +79,8 @@ const appRoutes: Routes = [
     InventoryListComponent,
     IngredientSearchComponent,
     InventoryFormComponent,
+    HouseholdListComponent,
+    HouseholdAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +99,7 @@ const appRoutes: Routes = [
     JwtauthService,
     ProductService,
     HouseholdService,
+    HouseholdGuard,
   ],
   bootstrap: [AppComponent],
 })

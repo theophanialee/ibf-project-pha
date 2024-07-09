@@ -43,9 +43,9 @@ public class LoginController {
 
     @PostMapping(path = "/authenticateUser")
     public ResponseEntity<String> authenticateUser(@RequestBody User loginUser, HttpServletResponse response) {
-        boolean isExist = userSvc.authenticateUser(loginUser);
+        String userId = userSvc.authenticateUser(loginUser);
 
-        if (isExist) {
+        if (userId != null && !userId.isEmpty()) {
 
             System.out.println("user exists");
             // Generate JWT cookie
@@ -54,6 +54,7 @@ public class LoginController {
             // Return response with JWT cookie
             JsonObject jsonObj = Json.createObjectBuilder()
                     .add("isExist", true)
+                    .add("userId", userId)
                     .add("kitchenkakisJWT", jwt)
                     .build();
 

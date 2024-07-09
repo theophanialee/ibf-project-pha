@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { Observable, take } from 'rxjs';
 import { JwtauthService } from '../services/jwtauth.service';
+import * as AuthActions from '../states/auth/auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-navbar',
@@ -13,28 +14,17 @@ export class NavbarComponent {
   signupComplete = false;
 
   constructor(
-    private loginSvc: LoginService,
     private router: Router,
-    private jwtAuthSvc: JwtauthService
+    private jwtAuthSvc: JwtauthService,
+    private store: Store
   ) {}
 
   signout(): void {
-    this.loginSvc
-      .signout()
-      .pipe(take(1))
-      .subscribe({
-        next: (response: any) => {
-          console.log('Signout response:', response);
-
-          if (response.isSignedOut === true) {
-            this.jwtAuthSvc.removeToken();
-            this.signupComplete = true; // Display "Signup complete" message or handle as needed
-            this.router.navigate(['/login']); // Redirect to login page after signout
-          }
-        },
-        error: (error) => {
-          console.error('Failed to sign out', error);
-        },
-      });
+    this.store.dispatch(AuthActions.logout());
+    this.jwtAuthSvc.removeToken();
+    this.signupComplete = true;
+    localStorage.removeItem('selectedHouseholdId');
+    localStorage.removeItem('userId');
+    this.router.navigate(['/login']);
   }
 }
