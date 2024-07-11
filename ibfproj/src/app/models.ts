@@ -1,11 +1,12 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { authReducer, AuthState } from './states/auth/auth.state';
+import { AuthState } from './states/auth/auth.state';
 import {
   householdReducer,
   HouseholdState,
 } from './states/household/household.reducer';
 import { productReducer } from './states/product/product.reducer';
 import { ProductState } from './states/product/product.state';
+import { authReducer } from './states/auth/auth.reducer';
 
 export interface User {
   username: string;

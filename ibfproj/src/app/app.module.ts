@@ -14,7 +14,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './states/auth/auth.guard';
 import { JwtauthService } from './services/jwtauth.service';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './states/auth/auth.state';
 import { IngredientSearchComponent } from './ingredient-search/ingredient-search.component';
 import { ProductService } from './services/product.service';
 import { InventoryFormComponent } from './inventory-form/inventory-form.component';
@@ -29,6 +28,8 @@ import { OneHouseholdComponent } from './one-household/one-household.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatIconModule } from '@angular/material/icon';
+import { MembersAddComponent } from './members-add/members-add.component';
+import { authReducer } from './states/auth/auth.reducer';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
     HouseholdListComponent,
     HouseholdAddComponent,
     OneHouseholdComponent,
+    MembersAddComponent,
   ],
   imports: [
     BrowserModule,

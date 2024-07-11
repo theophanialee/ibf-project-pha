@@ -23,7 +23,7 @@ export class AuthGuard {
     | boolean
     | UrlTree {
     if (this.jwtService.getToken()) {
-      return true; // User is authenticated, allow access
+      return true; 
     } else {
       this.router.navigate(['/login']);
       return false;

@@ -45,7 +45,6 @@ export class JwtauthService {
     this.store.dispatch(AuthActions.logout());
   }
 
-  // Check if user is authenticated (token present and valid)
   isAuthenticated(): Observable<boolean> {
     return this.store.select((state) => state.auth.isAuthenticated);
   }
