@@ -1,5 +1,11 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { authReducer, AuthState } from './states/auth/auth.state';
+import {
+  householdReducer,
+  HouseholdState,
+} from './states/household/household.reducer';
+import { productReducer } from './states/product/product.reducer';
+import { ProductState } from './states/product/product.state';
 
 export interface User {
   username: string;
@@ -14,13 +20,15 @@ export interface AuthResponse {
 }
 
 export interface AppState {
-  auth: AuthState; // Define auth slice in your AppState
-  // You can add other state slices here if needed
+  auth: AuthState;
+  household: HouseholdState;
+  product: ProductState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
-  // Define other reducers here if needed
+  household: householdReducer,
+  product: productReducer,
 };
 
 export interface ProductDetails {

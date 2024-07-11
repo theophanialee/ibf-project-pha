@@ -33,17 +33,13 @@ export class HouseholdComponent implements OnInit {
       this.householdService.createHousehold(household).subscribe(
         (response) => {
           console.log('Household created successfully', response);
-          // Navigate to another route after successful creation
           console.log('route to next component');
-
-          // this.router.navigate(['/households']);
         },
         (error) => {
           console.error('Error creating household', error);
         }
       );
     } else {
-      // Handle form invalid case
       console.log('Form is invalid');
     }
   }

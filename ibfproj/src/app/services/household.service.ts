@@ -39,4 +39,16 @@ export class HouseholdService {
 
     return this.httpClient.get<Household[]>(`${this.baseURL}/get/${userId}`);
   }
+
+  updateHousehold(
+    householdId: string,
+    household: Household
+  ): Observable<Household> {
+    console.log('Update hosehold', household);
+
+    return this.httpClient.put<Household>(
+      `${this.baseURL}/update/${householdId}`,
+      household
+    );
+  }
 }

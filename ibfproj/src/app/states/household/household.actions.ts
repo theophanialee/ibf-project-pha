@@ -20,3 +20,13 @@ export const storeHouseholdId = createAction(
   '[Household] Store Household ID',
   props<{ householdId: string }>()
 );
+
+export const storeSelectedHousehold = createAction(
+  '[Household] Store Selected Household',
+  props<{ household: Household }>()
+);
+
+export const updateHousehold = createAction(
+  '[Household] Update Household',
+  props<{ household: Household }>()
+);

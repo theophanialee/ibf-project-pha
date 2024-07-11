@@ -25,7 +25,6 @@ export class AuthGuard {
     if (this.jwtService.getToken()) {
       return true; // User is authenticated, allow access
     } else {
-      // User is not authenticated, redirect to login page
       this.router.navigate(['/login']);
       return false;
     }

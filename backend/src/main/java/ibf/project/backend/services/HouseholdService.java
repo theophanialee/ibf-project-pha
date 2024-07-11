@@ -44,4 +44,17 @@ public class HouseholdService {
     public List<HouseholdDetails> getHouseholdsByUserId(String userId) {
         return householdRepo.getHouseholdsByUserId(userId);
     }
+
+    public HouseholdDetails getHouseholdById(String householdId) {
+        return householdRepo.getHouseholdById(householdId);
+    }
+
+    public HouseholdDetails updateHousehold(HouseholdDetails household) {
+        int rowsAffected = householdRepo.updateHousehold(household);
+        if (rowsAffected > 0) {
+            return householdRepo.getHouseholdById(household.getHouseholdId());
+        } else {
+            throw new RuntimeException("Failed to update household with id: " + household.getHouseholdId());
+        }
+    }
 }

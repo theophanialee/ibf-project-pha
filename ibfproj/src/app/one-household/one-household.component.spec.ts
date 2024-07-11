@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InventoryListComponent } from './inventory.list.component';
+import { OneHouseholdComponent } from './one-household.component';
 
-describe('InventoryListComponent', () => {
-  let component: InventoryListComponent;
-  let fixture: ComponentFixture<InventoryListComponent>;
+describe('OneHouseholdComponent', () => {
+  let component: OneHouseholdComponent;
+  let fixture: ComponentFixture<OneHouseholdComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InventoryListComponent]
+      declarations: [OneHouseholdComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InventoryListComponent);
+    fixture = TestBed.createComponent(OneHouseholdComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,22 @@ public class HouseholdController {
     @GetMapping("/get/{userId}")
     public List<HouseholdDetails> getHouseholdsByUserId(@PathVariable String userId) {
         return householdSvc.getHouseholdsByUserId(userId);
+    }
+
+    @GetMapping("/{householdId}")
+    public ResponseEntity<HouseholdDetails> getHouseholdById(@PathVariable String householdId) {
+        HouseholdDetails household = householdSvc.getHouseholdById(householdId);
+        return ResponseEntity.ok(household);
+    }
+
+    @PutMapping("/update/{householdId}")
+    public ResponseEntity<HouseholdDetails> updateHousehold(@PathVariable String householdId,
+            @RequestBody HouseholdDetails householdDetails) {
+        householdDetails.setHouseholdId(householdId);
+
+        System.out.println(householdId + " " + householdDetails);
+        HouseholdDetails updatedHousehold = householdSvc.updateHousehold(householdDetails);
+        return ResponseEntity.ok(updatedHousehold);
     }
 
 }

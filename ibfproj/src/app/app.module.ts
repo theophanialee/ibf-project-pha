@@ -13,7 +13,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './states/auth/auth.guard';
 import { JwtauthService } from './services/jwtauth.service';
-import { InventoryListComponent } from './inventory.list/inventory.list.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './states/auth/auth.state';
 import { IngredientSearchComponent } from './ingredient-search/ingredient-search.component';
@@ -26,6 +25,8 @@ import { householdReducer } from './states/household/household.reducer';
 import { HouseholdListComponent } from './household-list/household-list.component';
 import { HouseholdGuard } from './states/household/household.guard';
 import { HouseholdAddComponent } from './household-add/household-add.component';
+import { OneHouseholdComponent } from './one-household/one-household.component';
+import { InventoryListComponent } from './inventory-list/inventory-list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -39,18 +40,13 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'household/list',
-    component: HouseholdListComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'household/add',
     component: HouseholdAddComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'inventory/list',
-    component: InventoryListComponent,
+    path: 'household/:householdId',
+    component: OneHouseholdComponent,
     canActivate: [AuthGuard, HouseholdGuard],
   },
   {
@@ -81,6 +77,7 @@ const appRoutes: Routes = [
     InventoryFormComponent,
     HouseholdListComponent,
     HouseholdAddComponent,
+    OneHouseholdComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@ export class HouseholdGuard {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    const householdId = localStorage.getItem('householdId');
+    const householdId = localStorage.getItem('selectedHouseholdId');
     if (householdId) {
       return true;
     } else {

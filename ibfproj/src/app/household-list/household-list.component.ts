@@ -2,8 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HouseholdService } from '../services/household.service';
 import { JwtauthService } from '../services/jwtauth.service';
-import { Household } from '../models';
+import { AppState, Household } from '../models';
 import { Observable } from 'rxjs';
+import {
+  storeHouseholdId,
+  storeSelectedHousehold,
+} from '../states/household/household.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-household-list',
@@ -16,7 +21,8 @@ export class HouseholdListComponent {
   constructor(
     private router: Router,
     private householdSvc: HouseholdService,
-    private jwtAuthSvc: JwtauthService
+    private jwtAuthSvc: JwtauthService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +41,14 @@ export class HouseholdListComponent {
     this.households$ = this.householdSvc.getHouseholdsByUserId(userId); // Assign observable
   }
 
-  navigateToHouseholdDetails(householdId: string): void {
-    this.router.navigate(['/household', 'manage', householdId]);
-  }
-
-  selectHousehold(householdId: string): void {
-    localStorage.setItem('selectedHouseholdId', householdId);
+  selectHousehold(household: Household): void {
+    localStorage.setItem('selectedHouseholdId', household.householdId);
+    this.store.dispatch(
+      storeHouseholdId({ householdId: household.householdId })
+    );
+    this.store.dispatch(storeSelectedHousehold({ household }));
+    this.router.navigate(['/household', household.householdId]);
   }
 }
+
+
