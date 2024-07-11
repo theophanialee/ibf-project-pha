@@ -35,8 +35,6 @@ export class HouseholdService {
   }
 
   getHouseholdsByUserId(userId: string): Observable<Household[]> {
-    console.log('Get household for: ', userId);
-
     return this.httpClient.get<Household[]>(`${this.baseURL}/get/${userId}`);
   }
 
@@ -50,5 +48,9 @@ export class HouseholdService {
       `${this.baseURL}/update/${householdId}`,
       household
     );
+  }
+
+  getHouseholdDetailsByHHId(householdId: string): Observable<Household | null> {
+    return this.httpClient.get<Household>(`${this.baseURL}/${householdId}`);
   }
 }

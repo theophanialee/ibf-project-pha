@@ -12,6 +12,7 @@ import { ProductDetails } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductState } from '../states/product/product.state';
 import { getSelectedProduct } from '../states/product/product.selectors';
+import { InventoryService } from '../services/inventory.service';
 
 @Component({
   selector: 'app-inventory-form',
@@ -24,9 +25,9 @@ export class InventoryFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
-    private store: Store<{ product: ProductState }>
+    private store: Store<{ product: ProductState }>,
+    private inventorySvc: InventoryService
   ) {
     this.selectedProduct$ = this.store.pipe(select(getSelectedProduct));
   }
@@ -36,8 +37,8 @@ export class InventoryFormComponent implements OnInit {
       label: ['', Validators.required],
       brand: ['', Validators.required],
       servingSizeWeight: ['', Validators.required],
-      expiryDate: ['', [Validators.required, this.futureDateValidator]], // Corrected placement
-      servings: ['', [Validators.required, this.positiveNumberValidator]], // Corrected placement
+      expiryDate: ['', [Validators.required, this.futureDateValidator]],
+      servings: ['', [Validators.required, this.positiveNumberValidator]],
     });
 
     this.selectedProduct$.subscribe((product) => {
@@ -46,7 +47,6 @@ export class InventoryFormComponent implements OnInit {
           label: product.label,
           brand: product.brand,
           servingSizeWeight: product.servingSizeWeight,
-          // Optionally, set other form fields here
         });
       }
     });
@@ -54,11 +54,18 @@ export class InventoryFormComponent implements OnInit {
 
   onSubmit() {
     if (this.inventoryForm.valid) {
-      // Process form submission
-      console.log(this.inventoryForm.value);
-      // Example: Send data to backend or perform further actions
-    } else {
-      // Form is invalid, handle accordingly
+      const formData = this.inventoryForm.value;
+      this.inventorySvc.submitInventoryForm(formData).subscribe(
+        (response) => {
+          console.log('Form data submitted successfully:', response);
+          const householdId = localStorage.getItem('selectedHouseholdId');
+          this.router.navigate(['/household', householdId]);
+        },
+        (error) => {
+          console.error('Error submitting form data:', error);
+          alert('Error submitting form data!');
+        }
+      );
     }
   }
 

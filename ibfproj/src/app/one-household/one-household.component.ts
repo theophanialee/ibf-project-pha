@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppState, Household } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { HouseholdService } from '../services/household.service';
@@ -27,6 +27,25 @@ export class OneHouseholdComponent {
   }
 
   ngOnInit(): void {
+    this.selectedHousehold$ = this.store
+      .select((state) => state.household.selectedHousehold)
+      .pipe(
+        switchMap((household) => {
+          if (!household) {
+            const householdId = localStorage.getItem('selectedHouseholdId');
+            if (householdId) {
+              return this.householdService.getHouseholdDetailsByHHId(
+                householdId
+              );
+            } else {
+              return of(null);
+            }
+          } else {
+            return of(household);
+          }
+        })
+      );
+
     this.selectedHousehold$.subscribe((household) => {
       this.household = household;
     });

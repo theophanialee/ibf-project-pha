@@ -27,6 +27,8 @@ import { HouseholdGuard } from './states/household/household.guard';
 import { HouseholdAddComponent } from './household-add/household-add.component';
 import { OneHouseholdComponent } from './one-household/one-household.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatIconModule } from '@angular/material/icon';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
       product: productReducer,
       household: householdReducer,
     }),
+    MatIconModule,
   ],
   providers: [
     AuthGuard,
@@ -97,6 +100,7 @@ const appRoutes: Routes = [
     ProductService,
     HouseholdService,
     HouseholdGuard,
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

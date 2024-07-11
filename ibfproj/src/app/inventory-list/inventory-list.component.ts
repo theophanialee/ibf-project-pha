@@ -1,10 +1,32 @@
 import { Component } from '@angular/core';
+import { InventoryService } from '../services/inventory.service';
+import { Listing } from '../models';
 
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
-  styleUrl: './inventory-list.component.css'
+  styleUrl: './inventory-list.component.css',
 })
 export class InventoryListComponent {
+  inventoryList: Listing[] = [];
 
+  constructor(private inventorySvc: InventoryService) {}
+
+  ngOnInit(): void {
+    this.fetchInventoryList();
+  }
+
+  fetchInventoryList(): void {
+    const householdId = localStorage.getItem('selectedHouseholdId');
+
+    if (householdId != null)
+      this.inventorySvc.getListingsByHousehold(householdId).subscribe(
+        (data: Listing[]) => {
+          this.inventoryList = data;
+        },
+        (error) => {
+          console.error('Error fetching inventory:', error);
+        }
+      );
+  }
 }

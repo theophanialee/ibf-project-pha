@@ -45,3 +45,16 @@ export interface Household {
   description: string;
   lastEdited: Date;
 }
+
+//Receive back
+export interface Listing {
+  listingId: string;
+  userId: string;
+  householdId: string;
+  label: string;
+  brand: string;
+  servingSizeWeight: number;
+  servings: number;
+  expiryDate: Date;
+  lastEdited: Date;
+}
