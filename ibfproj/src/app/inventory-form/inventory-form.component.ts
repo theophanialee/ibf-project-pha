@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductDetails } from '../models';
@@ -27,19 +33,13 @@ export class InventoryFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.inventoryForm = this.fb.group({
-      label: [{ value: '', disabled: true }, Validators.required], // Disabled for readonly
-      brand: [{ value: '', disabled: true }, Validators.required],
-      servingSizeWeight: [{ value: '', disabled: true }, , Validators.required],
-      expiryDate: ['', Validators.required],
-      servings: ['', Validators.required],
+      label: ['', Validators.required],
+      brand: ['', Validators.required],
+      servingSizeWeight: ['', Validators.required],
+      expiryDate: ['', [Validators.required, this.futureDateValidator]], // Corrected placement
+      servings: ['', [Validators.required, this.positiveNumberValidator]], // Corrected placement
     });
 
-    //  Fetch product details based on route parameter if needed
-    // this.router.params.subscribe((params) => {
-    //   const foodId = params['foodId'];
-    // });
-
-    // Subscribe to selectedProduct changes
     this.selectedProduct$.subscribe((product) => {
       if (product) {
         this.inventoryForm.patchValue({
@@ -60,5 +60,15 @@ export class InventoryFormComponent implements OnInit {
     } else {
       // Form is invalid, handle accordingly
     }
+  }
+
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const currentDate = new Date();
+    const controlDate = new Date(control.value);
+    return controlDate > currentDate ? null : { futureDate: true };
+  }
+
+  positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value > 0 ? null : { positiveNumber: true };
   }
 }
