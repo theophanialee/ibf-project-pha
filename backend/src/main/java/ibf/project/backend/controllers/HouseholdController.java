@@ -47,7 +47,6 @@ public class HouseholdController {
     public ResponseEntity<HouseholdDetails> updateHousehold(@PathVariable String householdId,
             @RequestBody HouseholdDetails householdDetails) {
         householdDetails.setHouseholdId(householdId);
-
         System.out.println(householdId + " " + householdDetails);
         HouseholdDetails updatedHousehold = householdSvc.updateHousehold(householdDetails);
         return ResponseEntity.ok(updatedHousehold);

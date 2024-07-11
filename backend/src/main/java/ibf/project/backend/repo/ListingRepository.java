@@ -28,6 +28,7 @@ public class ListingRepository {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_FIND_BY_HOUSEHOLD_ID = "SELECT * FROM listings WHERE household_id = ?";
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM listings WHERE listing_id = ?";
 
     public int saveListing(Listing listing) {
 
@@ -42,6 +43,11 @@ public class ListingRepository {
 
     public List<Listing> getListingByHHId(String householdId) {
         return jdbcTemplate.query(SQL_FIND_BY_HOUSEHOLD_ID, new ListingRowMapper(), householdId);
+    }
+
+    public boolean deleteListing(String listingId) {
+        int rowsAffected = jdbcTemplate.update(SQL_DELETE_BY_ID, listingId);
+        return rowsAffected > 0;
     }
 
     private static final class ListingRowMapper implements RowMapper<Listing> {
@@ -71,4 +77,5 @@ public class ListingRepository {
             return listing;
         }
     }
+
 }

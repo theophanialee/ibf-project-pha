@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ibf.project.backend.models.Listing;
 import ibf.project.backend.services.ListingService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -31,11 +33,21 @@ public class ListingController {
         return ResponseEntity.ok(listing);
     }
 
-    @GetMapping("/listings")
-    public ResponseEntity<List<Listing>> getMethodName(@RequestParam String householdId) {
+    @GetMapping("/listings/{householdId}")
+    public ResponseEntity<List<Listing>> getListingByHHId(@PathVariable String householdId) {
 
         List<Listing> listings = listingSvc.getListingByHHId(householdId);
         return ResponseEntity.ok(listings);
+    }
+
+    @DeleteMapping("/delete/{listingId}")
+    public ResponseEntity<Boolean> deleteListing(@PathVariable String listingId) {
+        boolean isDeleted = listingSvc.deleteListing(listingId);
+        if (isDeleted) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(404).body(false);
+        }
     }
 
 }

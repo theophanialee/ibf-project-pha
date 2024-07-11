@@ -29,4 +29,17 @@ export class InventoryListComponent {
         }
       );
   }
+
+  deleteListing(listingId: string): void {
+    this.inventorySvc.deleteListing(listingId).subscribe(
+      () => {
+        this.inventoryList = this.inventoryList.filter(
+          (listing) => listing.listingId !== listingId
+        );
+      },
+      (error) => {
+        console.error('Error deleting listing:', error);
+      }
+    );
+  }
 }

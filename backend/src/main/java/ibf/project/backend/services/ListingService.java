@@ -22,4 +22,8 @@ public class ListingService {
         return listingRepo.getListingByHHId(householdId);
     }
 
+    public boolean deleteListing(String listingId) {
+        return listingRepo.deleteListing(listingId);
+    }
+
 }

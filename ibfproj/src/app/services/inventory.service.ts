@@ -25,9 +25,10 @@ export class InventoryService {
   }
 
   getListingsByHousehold(householdId: string): Observable<Listing[]> {
-    const params = new HttpParams().set('householdId', householdId);
-    return this.httpClient.get<Listing[]>(`${this.baseURL}/listings`, {
-      params,
-    });
+    return this.httpClient.get<Listing[]>(`${this.baseURL}/listings/${householdId}`);
+  }
+
+  deleteListing(listingId: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseURL}/delete/${listingId}`);
   }
 }
