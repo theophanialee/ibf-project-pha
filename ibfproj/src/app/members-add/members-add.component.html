@@ -1,1 +1,60 @@
-<p>members-add works!</p>
+
+<div class="max-w-lg mx-auto bg-c1 p-8 rounded-lg shadow-md">
+    <h1 class="block text-c2 font-semibold text-lg text-center">Search for user</h1>
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="space-y-4">
+      <!-- Ingredient input -->
+      <div>
+        <input
+          id="username"
+          formControlName="username"
+          type="text"
+          class="block w-full mt-1 border-c4 rounded-md p-2"
+          placeholder="Enter an user to search"
+        />
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="w-full bg-c2 text-white py-2 px-4 rounded-md shadow-sm hover:bg-c4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 font-semibold"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Displaying search results -->
+  <div *ngIf="userList.length > 0" class="mt-6">
+    <h2 class="text-c2 font-semibold text-lg text-center">Search Results</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+      <div
+        *ngFor="let u of userList"
+        class="p-4 border border-c4 rounded-md shadow-md flex flex-col"
+      >
+        <!-- <img
+          [src]="u.image"
+          alt="{{ u.label }}"
+          class="w-24 h-24 mx-auto"
+        /> -->
+        <div>
+          <h3 class="text-c2 font-semibold mt-2">{{ u.username }}</h3>
+          <p class="text-c2 italic">{{ u.email }}</p>
+        </div>
+ 
+        <div class="mt-4 flex justify-end">
+            <div class="mt-4 flex justify-end">
+                <button class="text-c1 text-2xl bg-c2 font-semibold rounded-full w-12 h-12 flex items-center justify-center hover:bg-c4 hover:text-white"
+                        (click)="onSelectUser(u)">
+                  +
+                </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No results found message -->
+  <div *ngIf="userList.length === 0 && searchPerformed" class="mt-6 text-center">
+    <h2 class="text-c2 font-semibold text-lg">No results found</h2>
+  </div>
+

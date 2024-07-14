@@ -18,18 +18,19 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    console.log('show nav bar1', this.showNavbar);
+    console.log('ngOnInit: show nav bar initial', this.showNavbar);
     this.jwtAuthSvc.isAuthenticated().subscribe((isAuthenticated) => {
+      console.log('ngOnInit: is authenticated?', isAuthenticated);
       this.showNavbar = isAuthenticated;
-      console.log('is authenticated??', isAuthenticated);
-      console.log('show nav bar2', this.showNavbar);
+      console.log('ngOnInit: show nav bar after auth check', this.showNavbar);
     });
   }
 
   private checkLocalStorage(): void {
-    console.log('show nav bar3', this.showNavbar);
+    console.log('checkLocalStorage: show nav bar before', this.showNavbar);
     const selectedHouseholdId = localStorage.getItem('selectedHouseholdId');
     this.showNavbar = !!selectedHouseholdId;
-    console.log('show nav bar4', this.showNavbar);
+    console.log('checkLocalStorage: selectedHouseholdId', selectedHouseholdId);
+    console.log('checkLocalStorage: show nav bar after', this.showNavbar);
   }
 }

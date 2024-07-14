@@ -62,6 +62,11 @@ const appRoutes: Routes = [
     component: InventoryFormComponent,
     canActivate: [AuthGuard, HouseholdGuard],
   },
+  {
+    path: 'household/members/add',
+    component: MembersAddComponent,
+    canActivate: [AuthGuard, HouseholdGuard],
+  },
 
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirect invalid routes to /login
 ];

@@ -4,13 +4,11 @@ import * as AuthActions from './auth.actions';
 
 export const authReducer = createReducer(
   initialState,
-
   on(AuthActions.login, (state, { token }) => ({
     ...state,
-    isAuthenticated: true,
-    token: token,
+    isAuthenticated: !!token,
+    token,
   })),
-
   on(AuthActions.logout, (state) => ({
     ...state,
     isAuthenticated: false,

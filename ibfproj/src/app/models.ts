@@ -59,3 +59,8 @@ export interface Listing {
   expiryDate: Date;
   lastEdited: Date;
 }
+
+export interface ExistingUser {
+  username: string;
+  email: string;
+}

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { AppState, Household } from '../models';
+import { AppState, ExistingUser, Household } from '../models';
 import { Store } from '@ngrx/store';
 import { JwtauthService } from './jwtauth.service';
 import { storeHouseholdId } from '../states/household/household.actions';
@@ -52,5 +52,11 @@ export class HouseholdService {
 
   getHouseholdDetailsByHHId(householdId: string): Observable<Household | null> {
     return this.httpClient.get<Household>(`${this.baseURL}/${householdId}`);
+  }
+
+  searchUsers(username: string): Observable<ExistingUser[] | null> {
+    return this.httpClient.get<ExistingUser[]>(
+      `${this.baseURL}/members/${username}`
+    );
   }
 }
