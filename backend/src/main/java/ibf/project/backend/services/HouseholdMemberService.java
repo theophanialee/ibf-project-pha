@@ -27,4 +27,12 @@ public class HouseholdMemberService {
         householdMemberRepo.saveHouseholdMember(member);
         ;
     }
+
+    public boolean addMemberToHousehold(String householdId, User user) {
+        HouseholdMember newMember = new HouseholdMember();
+        newMember.setHouseholdId(householdId);
+        newMember.setUserId(user.getUserId());
+        return householdMemberRepo.saveHouseholdMember(newMember);
+    }
+
 }

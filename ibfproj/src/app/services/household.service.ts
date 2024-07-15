@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AppState, ExistingUser, Household } from '../models';
 import { Store } from '@ngrx/store';
 import { JwtauthService } from './jwtauth.service';
@@ -55,8 +55,20 @@ export class HouseholdService {
   }
 
   searchUsers(username: string): Observable<ExistingUser[] | null> {
-    return this.httpClient.get<ExistingUser[]>(
-      `${this.baseURL}/members/${username}`
+    return this.httpClient
+      .get<ExistingUser[]>(`${this.baseURL}/members/${username}`)
+      .pipe(
+        map((response) => (Array.isArray(response) ? response : [response]))
+      );
+  }
+
+  addMemberToHousehold(
+    householdId: string,
+    user: ExistingUser
+  ): Observable<boolean> {
+    return this.httpClient.post<boolean>(
+      `${this.baseURL}/members/add/${householdId}`,
+      user
     );
   }
 }

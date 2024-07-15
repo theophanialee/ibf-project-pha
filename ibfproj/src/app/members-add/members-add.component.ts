@@ -8,6 +8,8 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
+import { Router } from '@angular/router';
+import { User } from '../models';
 
 @Component({
   selector: 'app-members-add',
@@ -20,26 +22,27 @@ export class MembersAddComponent {
   searchPerformed: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private householdSvc: HouseholdService) {
+  constructor(
+    private fb: FormBuilder,
+    private householdSvc: HouseholdService,
+    private router: Router
+  ) {
     this.searchForm = this.fb.group({
-      user: [''],
+      username: [''],
     });
+  }
 
-    // Watch changes in the form input field
-    this.searchForm
-      .get('user')
-      ?.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((searchTerm: string) => {
-          return this.householdSvc.searchUsers(searchTerm);
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((users) => {
-        // this.userList = users;
-        this.searchPerformed = true;
-      });
+  search(): void {
+    const usernameSearch = this.searchForm.get('username')?.value;
+    if (usernameSearch) {
+      this.householdSvc
+        .searchUsers(usernameSearch)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((users) => {
+          this.userList = users || [];
+          this.searchPerformed = true;
+        });
+    }
   }
 
   ngOnDestroy(): void {
@@ -47,8 +50,30 @@ export class MembersAddComponent {
     this.destroy$.complete();
   }
 
-  onSelectUser(user: any): void {
+  onSelectUser(user: User): void {
     console.log('Selected user:', user);
-    // Handle user selection logic here
+
+    const householdId = localStorage.getItem('selectedHouseholdId');
+
+    if (householdId != null) {
+      this.householdSvc
+        .addMemberToHousehold(householdId, user)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (response) => {
+            if (response) {
+              alert('User added to  household');
+              this.router.navigate([`/household/${householdId}`]);
+            } else {
+              alert('User is already an existing member in this household');
+              this.router.navigate([`/household/${householdId}`]);
+            }
+          },
+          (error) => {
+            console.error('Error adding user to household:', error);
+            alert('Failed to add user to household');
+          }
+        );
+    }
   }
 }

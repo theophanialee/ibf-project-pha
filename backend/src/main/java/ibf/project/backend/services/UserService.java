@@ -24,10 +24,10 @@ public class UserService {
 
     public String authenticateUser(User loginUser) {
         // Get user by username then match the passwords
-        User existingUser = userRepo.findUserByUsername(loginUser.getUsername()).orElse(null);
-        if (existingUser != null) {
-            passwordEncoder.matches(loginUser.getPassword(), existingUser.getPassword());
-            return existingUser.getUserId();
+        User user = userRepo.findUserByUsername(loginUser.getUsername()).orElse(null);
+        if (user != null) {
+            passwordEncoder.matches(loginUser.getPassword(), user.getPassword());
+            return user.getUserId();
         }
         return null;
     }
