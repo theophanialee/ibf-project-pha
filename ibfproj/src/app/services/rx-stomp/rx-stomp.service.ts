@@ -10,5 +10,9 @@ export class RxStompService extends RxStomp {
     super();
     this.configure(myRxStompConfig);
     this.activate();
+
+    this.connectionState$.subscribe((state) => {
+      console.log('Connection state:', state);
+    });
   }
 }

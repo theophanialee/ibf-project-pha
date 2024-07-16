@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.messaging.MessagingException;
 import org.springframework.web.bind.annotation.RestController;
 
-    import ibf.project.backend.models.User;
+import ibf.project.backend.models.HouseholdDetails;
+import ibf.project.backend.models.User;
     import ibf.project.backend.services.EmailService;
     import ibf.project.backend.services.HouseholdMemberService;
+    import ibf.project.backend.services.HouseholdService;
 
-    import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.PathVariable;
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 
         @Autowired
         HouseholdMemberService householdMemberSvc;
+
+        @Autowired
+        HouseholdService householdSvc;
 
         @Autowired
         private EmailService emailSvc;
@@ -39,12 +44,12 @@ import org.springframework.web.bind.annotation.RestController;
         public ResponseEntity<?> addMemberToHousehold(@PathVariable String householdId, @RequestBody User user) {
 
             boolean isSaved = householdMemberSvc.addMemberToHousehold(householdId, user);
-
+            HouseholdDetails household = householdSvc.getHouseholdById(householdId);
             if (isSaved) {
                 try {
 
             String recipientEmail = user.getEmail();
-            String householdName = householdId;
+            String householdName = household.getName();
             emailSvc.sendMemberAddedEmail(recipientEmail, householdName);
         } catch (MessagingException e) {
             // Handle email sending failure

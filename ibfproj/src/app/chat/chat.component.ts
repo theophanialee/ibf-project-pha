@@ -21,11 +21,11 @@ export class ChatComponent {
   }
 
   ngOnInit(): void {
-    this.subs$ = this.webSocketSvc
-      .getMessageSubject()
-      .subscribe((message: Message) => {
-        this.messages.push(message.body);
-      });
+    // this.subs$ = this.webSocketSvc
+    //   .getMessageSubject()
+    //   .subscribe((message: Message) => {
+    //     this.messages.push(message.body);
+    //   });
   }
 
   ngOnDestroy(): void {
@@ -38,7 +38,7 @@ export class ChatComponent {
     if (this.messageForm && this.messageForm.get('messageToSend')) {
       const messageToSend = this.messageForm.get('messageToSend')!.value;
       if (messageToSend.trim()) {
-        this.webSocketSvc.sendMessage('/app/chat', messageToSend);
+        this.webSocketSvc.sendMessage(messageToSend);
         this.messageForm.reset();
       }
     }

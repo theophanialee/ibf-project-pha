@@ -7,7 +7,7 @@ import ibf.project.backend.models.ChatMessage;
 
 public class ChatController {
 
-    @MessageMapping("/app/chat")
+    @MessageMapping("/chat")
     @SendTo("/topic/household")
     public ChatMessage sendMessage(ChatMessage message) {
 

@@ -14,28 +14,25 @@ public class EnableCORS {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("PUT", "GET", "HEAD", "POST", "DELETE",
-                        "OPTIONS", "PATCH");
-
+                registry
+                        .addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("PUT", "GET", "HEAD", "POST", "DELETE",
+                                "OPTIONS", "PATCH");
             }
-
         };
+
+        // return new WebMvcConfigurer() {
+        // @Override
+        // public void addCorsMappings(CorsRegistry registry) {
+        // registry
+        // .addMapping("/**")
+        // .allowedOriginPatterns("http://localhost:*") // Adjust to your allowed
+        // origins pattern
+        // .allowedMethods("PUT", "GET", "HEAD", "POST", "DELETE", "OPTIONS", "PATCH")
+        // .allowedHeaders("*");
+
+        // }
+        // };
     }
 }
-
-// public class EnableCORS implements WebMvcConfigurer {
-
-// final String path;
-// final String origins;
-
-// public EnableCORS(String path, String origins) {
-// this.path = path;
-// this.origins = origins;
-// }
-
-// @Override
-// public void addCorsMappings(CorsRegistry registry) {
-// registry.addMapping(path).allowedOrigins(origins);
-// }
-
-// }

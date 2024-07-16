@@ -21,6 +21,7 @@ export class MembersAddComponent {
   userList: any[] = [];
   searchPerformed: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -62,6 +63,7 @@ export class MembersAddComponent {
         .subscribe(
           (response) => {
             if (response) {
+              this.loading = false;
               alert('User added to household');
               this.router.navigate([`/household/${householdId}`]);
             } else {
@@ -70,6 +72,7 @@ export class MembersAddComponent {
             }
           },
           (error) => {
+            this.loading = false;
             console.error('Error adding user to household:', error);
             alert('Failed to add user to household');
           }

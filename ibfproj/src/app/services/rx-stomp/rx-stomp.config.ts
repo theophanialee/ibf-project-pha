@@ -1,6 +1,7 @@
 import { RxStompConfig } from '@stomp/rx-stomp';
 import { environment } from '../../../environments/environment.prod';
 import { CookieService } from 'ngx-cookie-service';
+import SockJS from 'sockjs-client';
 
 export const myRxStompConfig: RxStompConfig = {
   // Which server?
@@ -13,6 +14,8 @@ export const myRxStompConfig: RxStompConfig = {
   //   login: 'guest',
   //   passcode: 'guest',
   // },
+
+  webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
 
   beforeConnect: (stompClient: any) => {
     const cookieService = new CookieService(document, 'localhost');
