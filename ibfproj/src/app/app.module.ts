@@ -30,6 +30,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatIconModule } from '@angular/material/icon';
 import { MembersAddComponent } from './members-add/members-add.component';
 import { authReducer } from './states/auth/auth.reducer';
+import { RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -107,7 +108,10 @@ const appRoutes: Routes = [
     ProductService,
     HouseholdService,
     HouseholdGuard,
-    provideAnimationsAsync(),
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+    },
   ],
   bootstrap: [AppComponent],
 })

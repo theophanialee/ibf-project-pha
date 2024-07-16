@@ -62,7 +62,7 @@ export class MembersAddComponent {
         .subscribe(
           (response) => {
             if (response) {
-              alert('User added to  household');
+              alert('User added to household');
               this.router.navigate([`/household/${householdId}`]);
             } else {
               alert('User is already an existing member in this household');

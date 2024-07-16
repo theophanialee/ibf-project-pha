@@ -1,30 +1,66 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+
+import { Client, Message, StompSubscription } from '@stomp/stompjs';
+import { Observable, Subject } from 'rxjs';
+import { RxStompService } from './rx-stomp/rx-stomp.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebSocketService {
-  private socket$!: WebSocket;
+  private client: Client;
+  private isConnected: boolean = false;
 
-  connect(url: string): Observable<any> {
-    return new Observable(observer => {
-      this.socket$ = new WebSocket(url);
+  private messageSubject: Subject<Message> = new Subject<Message>();
 
-      this.socket$.onmessage = (event) => {
-        observer.next(event.data);
-      };
+  constructor(private rxStompSvc: RxStompService) {
+    this.client = new Client();
+    this.client.brokerURL = 'ws://localhost:8080/ws';
 
-      this.socket$.onerror = (event) => {
-        observer.error(event);
-      };
+    this.client.onConnect = () => {
+      console.log('Connected');
+      this.isConnected = true;
+    };
 
-      this.socket$.onclose = () => {
-        observer.complete();
-      };
+    this.client.onDisconnect = () => {
+      console.log('Disconnected');
+      this.isConnected = false;
+    };
 
-      // Return the cleanup function, called when the observable is unsubscribed
-      return () => this.socket$.close();
+    this.client.onStompError = (frame) => {
+      console.error('Broker reported error: ' + frame.headers['message']);
+      console.error('Additional details: ' + frame.body);
+    };
+
+    this.client.activate();
+  }
+
+  sendMessage(destination: string, message: string) {
+    this.rxStompSvc.publish({
+      destination: destination,
+      body: message,
     });
+
+    console.log(
+      '[ws service] message published to rxStomp: ',
+      message,
+      destination
+    );
+  }
+
+  subscribeToTopic(topic: string) {
+    return this.rxStompSvc
+      .watch(`/topic/${topic}`)
+      .subscribe((message: Message) => {
+        this.messageSubject.next(message);
+      });
+  }
+
+  private handleIncomingMessage(message: Message) {
+    this.messageSubject.next(message); // Emit the received message to subscribers
+  }
+
+  getMessageSubject(): Observable<Message> {
+    return this.messageSubject.asObservable();
   }
 }
