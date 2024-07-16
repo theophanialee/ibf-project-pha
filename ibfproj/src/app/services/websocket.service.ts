@@ -1,69 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Client, Message, StompSubscription } from '@stomp/stompjs';
-import { Observable, Subject } from 'rxjs';
-import { RxStompService } from './rx-stomp/rx-stomp.service';
+import { ChatMessage } from '../models';
+
+export type ListenerCallBack = (message: ChatMessage) => void;
 
 @Injectable({
   providedIn: 'root',
 })
-// export class WebSocketService {
-//   // private client: Client;
-//   // private isConnected: boolean = false;
-
-//   private messageSubject: Subject<Message> = new Subject<Message>();
-
-//   constructor(private rxStompSvc: RxStompService) {
-//     // this.client = new Client();
-//     // this.client.brokerURL = 'ws://localhost:8080/ws';
-//     // this.client.onConnect = () => {
-//     //   console.log('Connected');
-//     //   this.isConnected = true;
-//     // };
-//     // this.client.onDisconnect = () => {
-//     //   console.log('Disconnected');
-//     //   this.isConnected = false;
-//     // };
-//     // this.client.onStompError = (frame) => {
-//     //   console.error('Broker reported error: ' + frame.headers['message']);
-//     //   console.error('Additional details: ' + frame.body);
-//     // };
-//     // this.client.activate();
-//   }
-
-//   isConnected(): boolean {
-//     return this.rxStompSvc.connected();
-//   }
-
-//   sendMessage(destination: string, message: string) {
-//     this.rxStompSvc.publish({
-//       destination: destination,
-//       body: message,
-//     });
-
-//     console.log(
-//       '[ws service] message published to rxStomp: ',
-//       message,
-//       destination
-//     );
-//   }
-
-//   subscribeToTopic(topic: string) {
-//     return this.rxStompSvc
-//       .watch(`/topic/${topic}`)
-//       .subscribe((message: Message) => {
-//         this.messageSubject.next(message);
-//       });
-//   }
-
-//   private handleIncomingMessage(message: Message) {
-//     this.messageSubject.next(message); // Emit the received message to subscribers
-//   }
-
-//   getMessageSubject(): Observable<Message> {
-//     return this.messageSubject.asObservable();
-//   }
-// }
 export class WebSocketService {
   private client: Client;
   private subscription: StompSubscription | undefined;
@@ -91,30 +35,38 @@ export class WebSocketService {
     this.client.activate();
   }
 
-  public sendMessage(task: Message): void {
+  public sendMessage(message: Message): void {
     if (this.client && this.client.connected) {
       this.client.publish({
         destination: '/app/chat',
-        body: JSON.stringify(task),
+        body: JSON.stringify(message),
       });
     } else {
       console.error('STOMP client is not connected.');
     }
   }
 
-  // public listen(fun: ListenerCallBack): void {
-  //   if (this.client.connected) {
-  //     this.subscription = this.client.subscribe('/topic/household', (message: StompMessage) => {
-  //       fun(JSON.parse(message.body));
-  //     });
-  //   } else {
-  //     this.client.onConnect = () => {
-  //       this.subscription = this.client.subscribe('/topic/household', (message: StompMessage) => {
-  //         fun(JSON.parse(message.body));
-  //       });
-  //     };
-  //   }
-  // }
+  public listen(fun: ListenerCallBack): void {
+    if (this.client.connected) {
+      this.subscription = this.client.subscribe(
+        '/topic/household',
+        (message: Message) => {
+          const chatMessage = this.mapToChatMessage(message);
+          fun(chatMessage);
+        }
+      );
+    } else {
+      this.client.onConnect = () => {
+        this.subscription = this.client.subscribe(
+          '/topic/household',
+          (message: Message) => {
+            const chatMessage = this.mapToChatMessage(message);
+            fun(chatMessage);
+          }
+        );
+      };
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -123,5 +75,12 @@ export class WebSocketService {
     if (this.client) {
       this.client.deactivate();
     }
+  }
+
+  private mapToChatMessage(message: Message): ChatMessage {
+    return {
+      username: message.headers['username'],
+      content: message.body,
+    };
   }
 }

@@ -65,3 +65,8 @@ export interface ExistingUser {
   email: string;
 }
 
+
+export interface ChatMessage {
+  username: string;
+  content: string;
+}

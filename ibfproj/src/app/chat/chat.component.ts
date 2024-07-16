@@ -3,6 +3,7 @@ import { Message, StompSubscription } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
 import { WebSocketService } from '../services/websocket.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChatMessage } from '../models';
 
 @Component({
   selector: 'app-chat',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChatComponent {
   messageForm: FormGroup;
-  messages: string[] = [];
+  messages: ChatMessage[] = [];
   subs$!: Subscription;
 
   constructor(private fb: FormBuilder, private webSocketSvc: WebSocketService) {
@@ -21,17 +22,9 @@ export class ChatComponent {
   }
 
   ngOnInit(): void {
-    // this.subs$ = this.webSocketSvc
-    //   .getMessageSubject()
-    //   .subscribe((message: Message) => {
-    //     this.messages.push(message.body);
-    //   });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subs$) {
-      this.subs$.unsubscribe();
-    }
+    this.webSocketSvc.listen((message) => {
+      this.messages.push(message);
+    });
   }
 
   sendMessage(): void {
@@ -41,6 +34,12 @@ export class ChatComponent {
         this.webSocketSvc.sendMessage(messageToSend);
         this.messageForm.reset();
       }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subs$) {
+      this.subs$.unsubscribe();
     }
   }
 }

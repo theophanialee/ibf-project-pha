@@ -22,17 +22,5 @@ public class EnableCORS {
             }
         };
 
-        // return new WebMvcConfigurer() {
-        // @Override
-        // public void addCorsMappings(CorsRegistry registry) {
-        // registry
-        // .addMapping("/**")
-        // .allowedOriginPatterns("http://localhost:*") // Adjust to your allowed
-        // origins pattern
-        // .allowedMethods("PUT", "GET", "HEAD", "POST", "DELETE", "OPTIONS", "PATCH")
-        // .allowedHeaders("*");
-
-        // }
-        // };
     }
 }

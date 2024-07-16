@@ -7,8 +7,9 @@
 
   <div class="bg-bg1 rounded-lg shadow-md p-4 mb-4 h-80 overflow-y-auto">
     <div *ngFor="let message of messages" class="flex mb-2">
-      <div class="bg-gray-200 rounded-lg p-2">
-        <p>{{ message }}</p>
+      <div class="bg-white rounded-lg p-2">
+        <p><strong>{{ message.username }}</strong></p>
+        <p>{{ message.content }}</p>
       </div>
     </div>
   </div>
