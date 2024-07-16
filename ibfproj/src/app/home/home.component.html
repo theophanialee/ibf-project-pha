@@ -1,9 +1,50 @@
-<h1>Home</h1> 
+<!-- home.component.html -->
 
-<h2> To display latest edited households </h2>
+<h1 class="bg-bg1 p-3 text-c2 font-bold">Your Dashboard <span *ngIf="household$ | async as household" class="text-2xl font-bold mb-4 text-c2">{{ household.name }}</span></h1>
 
-<h2> To display expiring items </h2>
+<div class="p-4 bg-c2 rounded-md m-5">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-c1">Expiring Soon from Household</h2>
+  </div>
+  <div class="overflow-x-auto">
+    <ul class="flex flex-nowrap space-x-4 py-4">
+      <li *ngFor="let listing of inventoryList" class="rounded-md p-4 bg-c1 text-c2 min-w-max">
+        <p class="text-c3"><strong>Expiry:</strong> {{ listing.expiryDate | date }}</p>
+        <div class="mb-2 bg-bg1 p-2 rounded-md">
+          <p class="text-lg font-bold">{{ listing.label }}</p>
+          <p class="text-c2">{{ listing.brand }}</p>
+        </div>
+        <div class="flex flex-wrap">
+          <div class="w-full md:w-1/2 p-2">
+            <p><strong>Serving Size:</strong> {{ listing.servingSizeWeight }}</p>
+            <p><strong>Servings:</strong> {{ listing.servings }}</p>
+            <p><strong>Last Edited:</strong> {{ listing.lastEdited | date:'medium' }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
 
-<h2> To display recipe suggestions for expiring items </h2>
-
- 
+<div class="p-4 bg-c4 rounded-md m-5">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-c4 bg-bg1 p-3 rounded">Recipe Suggestions for Expiring Items</h2>
+  </div>
+  <div class="overflow-x-auto">
+    <ul class="flex flex-nowrap space-x-4 py-4">
+      <li *ngFor="let recipe of recipeSuggestions" class="rounded-md p-4 bg-c3 text-bg1 min-w-max">
+        <div class="mb-2 bg-bg1 p-2 rounded-md text-c4">
+          <p class="text-lg font-bold">{{ recipe.title }}</p>
+          <p >{{ recipe.description }}</p>
+        </div>
+        <div class="flex flex-wrap">
+          <div class="w-full md:w-1/2 p-2">
+            <p><strong>Prep Time:</strong> {{ recipe.prepTime }}</p>
+            <p><strong>Cook Time:</strong> {{ recipe.cookTime }}</p>
+            <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

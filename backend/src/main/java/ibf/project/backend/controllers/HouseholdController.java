@@ -1,11 +1,11 @@
 package ibf.project.backend.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +34,7 @@ public class HouseholdController {
 
     @GetMapping("/get/{userId}")
     public List<HouseholdDetails> getHouseholdsByUserId(@PathVariable String userId) {
+        System.out.println(householdSvc.getHouseholdsByUserId(userId));
         return householdSvc.getHouseholdsByUserId(userId);
     }
 
@@ -48,6 +49,7 @@ public class HouseholdController {
             @RequestBody HouseholdDetails householdDetails) {
         householdDetails.setHouseholdId(householdId);
         System.out.println(householdId + " " + householdDetails);
+        householdDetails.setLastEdited(LocalDateTime.now());
         HouseholdDetails updatedHousehold = householdSvc.updateHousehold(householdDetails);
         return ResponseEntity.ok(updatedHousehold);
     }

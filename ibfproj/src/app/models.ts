@@ -1,12 +1,10 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { AuthState } from './states/auth/auth.state';
-import {
-  householdReducer,
-  HouseholdState,
-} from './states/household/household.reducer';
+import { householdReducer } from './states/household/household.reducer';
 import { productReducer } from './states/product/product.reducer';
 import { ProductState } from './states/product/product.state';
 import { authReducer } from './states/auth/auth.reducer';
+import { HouseholdState } from './states/household/household.state';
 
 export interface User {
   username: string;
@@ -65,8 +63,15 @@ export interface ExistingUser {
   email: string;
 }
 
-
 export interface ChatMessage {
   username: string;
   content: string;
+}
+
+export interface Recipe {
+  title: string;
+  description: string;
+  prepTime: string;
+  cookTime: string;
+  servings: number;
 }

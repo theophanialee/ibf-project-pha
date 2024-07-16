@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { HouseholdService } from '../services/household.service';
 import { updateHousehold } from '../states/household/household.actions';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-one-household',
@@ -15,15 +16,20 @@ export class OneHouseholdComponent {
   selectedHousehold$: Observable<Household | null>;
   editMode = false;
   household: Household | null = null;
+  householdForm: FormGroup;
 
   constructor(
     private store: Store<AppState>,
-    private activatedRoute: ActivatedRoute,
-    private householdService: HouseholdService
+    private householdService: HouseholdService,
+    private fb: FormBuilder
   ) {
     this.selectedHousehold$ = this.store.select(
       (state) => state.household.selectedHousehold
     );
+    this.householdForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
@@ -48,22 +54,37 @@ export class OneHouseholdComponent {
 
     this.selectedHousehold$.subscribe((household) => {
       this.household = household;
+      if (this.household) {
+        this.householdForm.patchValue({
+          name: this.household.name,
+          description: this.household.description,
+        });
+      }
     });
   }
 
   toggleEditMode(): void {
     this.editMode = !this.editMode;
+    if (this.editMode && this.household) {
+      this.householdForm.patchValue({
+        name: this.household.name,
+        description: this.household.description,
+      });
+    }
   }
 
   saveHousehold(householdId: string): void {
-    if (this.household) {
+    if (this.householdForm.valid) {
+      const updatedHousehold = {
+        ...this.household,
+        ...this.householdForm.value,
+      };
+
       this.householdService
-        .updateHousehold(householdId, this.household)
+        .updateHousehold(householdId, updatedHousehold)
         .subscribe(
-          (updatedHousehold) => {
-            this.store.dispatch(
-              updateHousehold({ household: updatedHousehold })
-            );
+          (household) => {
+            this.store.dispatch(updateHousehold({ household }));
             this.editMode = false;
           },
           (error) => {

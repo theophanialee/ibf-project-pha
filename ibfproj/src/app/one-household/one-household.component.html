@@ -2,24 +2,24 @@
   <h2 class="text-2xl font-bold mb-4 text-c2">{{ household.name }}</h2>
   <p class="text-lg text-c2">{{ household.description }}</p>
 
-  <button (click)="toggleEditMode()" mat-button class="bg-c4 text-white px-4 py-2 rounded mb-4 absolute bottom-4 right-4 hover:bg-red-700">
+  <button (click)="toggleEditMode()" mat-button class="bg-c4 text-white px-4 py-2 rounded mb-4 hover:bg-red-700">
     <mat-icon>{{ editMode ? 'cancel' : 'edit' }}</mat-icon>
     {{ editMode ? 'Cancel' : '' }}
   </button>
 
-
-  <form *ngIf="editMode" (ngSubmit)="saveHousehold(household.householdId)">
+  <form *ngIf="editMode" [formGroup]="householdForm" (ngSubmit)="saveHousehold(household.householdId)" class="flex flex-col space-y-4">
     <div class="mb-4">
       <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-      <input type="text" id="name"  name="name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
+      <input type="text" id="name" formControlName="name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" />
     </div>
     <div class="mb-4">
       <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-      <textarea id="description" name="description" class="mt-1 p-2 block w-full border border-gray-300 rounded-md"></textarea>
+      <textarea id="description" formControlName="description" class="mt-1 p-2 block w-full border border-gray-300 rounded-md"></textarea>
     </div>
-    <button type="submit" class="bg-c4 text-white px-4 py-2 rounded absolute bottom-4 right-4">Save</button>
+    <div class="flex space-x-2">
+      <button type="submit" class="bg-c4 text-white px-4 py-2 rounded">Save</button>
+    </div>
   </form>
 </div>
-
 
 <app-inventory-list></app-inventory-list>

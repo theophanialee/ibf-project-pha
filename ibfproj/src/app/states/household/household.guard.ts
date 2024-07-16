@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +12,8 @@ export class HouseholdGuard {
     if (householdId) {
       return true;
     } else {
-      // Redirect to a suitable page or show a message
-      this.router.navigate(['/household/list']);
+      alert('Please select a household first!');
+      this.router.navigate(['/household']);
       return false;
     }
   }

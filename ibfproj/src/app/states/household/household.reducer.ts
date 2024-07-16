@@ -4,19 +4,8 @@ import {
   storeHouseholdId,
   storeSelectedHousehold,
 } from './household.actions';
-import { Household } from '../../models';
+import { initialState } from './household.state';
 
-export interface HouseholdState {
-  households: Household[];
-  selectedHouseholdId: string | null;
-  selectedHousehold: Household | null;
-}
-
-export const initialState: HouseholdState = {
-  households: [],
-  selectedHouseholdId: null,
-  selectedHousehold: null,
-};
 
 export const householdReducer = createReducer(
   initialState,
