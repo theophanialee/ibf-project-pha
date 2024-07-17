@@ -14,7 +14,7 @@ public class BackendApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		System.out.println("‧₊˚ 𓐐𓎩 ‧₊˚ ⋅ Welcome to Kitchen Kakis! ");
+		System.out.println("‧₊˚ 𓐐𓎩 ‧₊˚ ⋅ Welcome to Kitchen Kaki! ");
 
 	}
 

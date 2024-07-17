@@ -1,0 +1,7 @@
+<div *ngIf="show" class="fixed bottom-4 right-4 bg-c4 text-white p-4 rounded shadow-md flex items-center z-50">
+    <div class="flex-1">
+
+      <strong>[New message] {{ message.username }}</strong>: {{ message.content }}
+    </div>
+    <button (click)="close()" class="ml-4 text-white">✖</button>
+</div>

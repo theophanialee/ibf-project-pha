@@ -10,6 +10,7 @@ import { WebSocketService } from './services/websocket.service';
 export class AppComponent {
   title = 'ibfproj';
   showNavbar: boolean = false;
+  newMessage: any = null;
 
   constructor(
     private jwtAuthSvc: JwtauthService,
@@ -22,10 +23,7 @@ export class AppComponent {
 
     this.webSocketSvc.listen((message) => {
       console.log('Message received in notification service:', message);
-
-      this.webSocketSvc.listen((message) => {
-        alert(`New message from ${message.username}: ${message.content}`);
-      });
+      this.newMessage = message;
     });
   }
 

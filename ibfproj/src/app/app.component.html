@@ -8,4 +8,7 @@
       <router-outlet></router-outlet>
     </div>
   </div>
+
+  <app-notification-popup *ngIf="newMessage" [message]="newMessage"></app-notification-popup>
+
 </body>

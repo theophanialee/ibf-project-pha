@@ -32,6 +32,7 @@ import { authReducer } from './states/auth/auth.reducer';
 import { RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotificationPopupComponent } from './notification-popup/notification-popup.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -103,6 +104,7 @@ const appRoutes: Routes = [
     OneHouseholdComponent,
     MembersAddComponent,
     NotificationsComponent,
+    NotificationPopupComponent,
   ],
   imports: [
     BrowserModule,
