@@ -10,11 +10,11 @@ COPY ibfproj/angular.json .
 COPY ibfproj/package*.json .
 COPY ibfproj/tsconfig*.json .
 COPY ibfproj/src src
-# COPY ibfproj/proxy.config.json .
+COPY ibfproj/ngsw-config.json .
 COPY ibfproj/tailwind.config.js .
 
 # Install modules
-RUN npm ci 
+RUN npm install --legacy-peer-deps
 RUN ng build
 
 # Build Spring Boot

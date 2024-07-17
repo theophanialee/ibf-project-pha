@@ -26,7 +26,6 @@ import { HouseholdGuard } from './states/household/household.guard';
 import { HouseholdAddComponent } from './household-add/household-add.component';
 import { OneHouseholdComponent } from './one-household/one-household.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatIconModule } from '@angular/material/icon';
 import { MembersAddComponent } from './members-add/members-add.component';
 import { authReducer } from './states/auth/auth.reducer';
@@ -116,12 +115,10 @@ const appRoutes: Routes = [
       household: householdReducer,
     }),
     MatIconModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }),
   ],
   providers: [
     AuthGuard,

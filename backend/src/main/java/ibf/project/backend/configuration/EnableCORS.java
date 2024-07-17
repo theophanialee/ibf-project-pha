@@ -31,7 +31,7 @@ public class EnableCORS {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins("https://kitchen-kaki.up.railway.app")
                         .allowedMethods("PUT", "GET", "HEAD", "POST", "DELETE",
                                 "OPTIONS", "PATCH");
             }
