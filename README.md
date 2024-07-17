@@ -1,6 +1,3 @@
-## Planning
-
-https://miro.com/app/board/uXjVK5LZgic=/
 
 ## ‧₊˚ 𓐐𓎩 ‧₊˚ ⋅ Welcome to Kitchen Kakis! 
 
@@ -11,6 +8,9 @@ Your Personal Kitchen Companion, the friend you definitely want around! Reducing
 https://kitchenkakis.online/
 https://kitchen-kaki.up.railway.app/
 
+## Planning
+
+https://miro.com/app/board/uXjVK5LZgic=/
 
 ## App summary
 
@@ -45,13 +45,15 @@ https://kitchen-kaki.up.railway.app/
 *Allows users to search for standard supermarket ingredients.*
 
 ![Inventory Form](screenshots/inventory-form.png)  
-*User-friendly form where information from standard supermarket ingredients search are populated into their own form to directly add into their inventory. Potential expansion: barcode scan or photo recognition using AI.*
+*User-friendly form where information from standard supermarket ingredients search are populated into their own form to directly add into their inventory.*
+*Potential expansion: barcode scan or photo recognition using AI.*
 
 
 # Live Chat
 
 ![Live Chat](screenshots/live-chat.png)  
-*Provides real-time chat support for users. Work in progress: Chat history.*
+*Provides real-time chat support for users.*
+*Work in progress: Chat history.*
 
 # Notifications
 
