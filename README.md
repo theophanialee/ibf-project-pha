@@ -1,5 +1,5 @@
 
-## ‧₊˚ 𓐐𓎩 ‧₊˚ ⋅ Welcome to Kitchen Kakis! 
+## ‧₊˚ 𓐐𓎩 ‧₊˚ ⋅ Welcome to Kitchen Kaki! 
 
 Your Personal Kitchen Companion, the friend you definitely want around! Reducing food waste through smarter inventory management and mindful consumption practices in households.
 
