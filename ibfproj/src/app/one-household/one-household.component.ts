@@ -86,6 +86,17 @@ export class OneHouseholdComponent {
           (household) => {
             this.store.dispatch(updateHousehold({ household }));
             this.editMode = false;
+
+            // Optionally, reload the household to reflect changes
+            this.householdService
+              .getHouseholdDetailsByHHId(householdId)
+              .subscribe((updated) => {
+                this.household = updated;
+                this.householdForm.patchValue({
+                  name: this.household?.name,
+                  description: this.household?.description,
+                });
+              });
           },
           (error) => {
             console.error('Error updating household:', error);

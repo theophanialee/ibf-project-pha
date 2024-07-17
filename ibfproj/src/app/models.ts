@@ -15,6 +15,7 @@ export interface User {
 export interface AuthResponse {
   isExist: boolean;
   userId: string;
+  username: string;
   kitchenkakisJWT: string;
 }
 
@@ -67,6 +68,8 @@ export interface ExistingUser {
 export interface ChatMessage {
   username: string;
   content: string;
+  userId: string;
+  householdId: string;
 }
 
 export interface Recipe {

@@ -22,12 +22,12 @@ public class UserService {
         return userRepo.createUser(createUser);
     }
 
-    public String authenticateUser(User loginUser) {
+    public User authenticateUser(User loginUser) {
         // Get user by username then match the passwords
         User user = userRepo.findUserByUsername(loginUser.getUsername()).orElse(null);
         if (user != null) {
             passwordEncoder.matches(loginUser.getPassword(), user.getPassword());
-            return user.getUserId();
+            return user;
         }
         return null;
     }

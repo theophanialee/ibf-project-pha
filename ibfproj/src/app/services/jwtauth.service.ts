@@ -13,6 +13,7 @@ import { AppState } from '../models';
 export class JwtauthService {
   private tokenKey = 'kitchenkakisJWT';
   private userIdKey = 'userId';
+  private username = 'username';
 
   constructor(
     private cookieService: CookieService,
@@ -26,9 +27,10 @@ export class JwtauthService {
   }
 
   // Save JWT token to cookie and update state
-  saveToken(token: string, userId: string): void {
+  saveToken(token: string, userId: string, username: string): void {
     this.cookieService.set(this.tokenKey, token, { expires: 1, path: '/' });
     localStorage.setItem(this.userIdKey, userId);
+    localStorage.setItem(this.username, username);
     console.log('User ID saved:', userId);
     this.store.dispatch(AuthActions.login({ token }));
   }

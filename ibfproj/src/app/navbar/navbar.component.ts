@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 })
 export class NavbarComponent {
   signupComplete = false;
+  username: string | null = null;
 
   constructor(
     private router: Router,
@@ -19,12 +20,17 @@ export class NavbarComponent {
     private store: Store
   ) {}
 
+  ngOnInit(): void {
+    this.username = localStorage.getItem('username');
+  }
+
   signout(): void {
     this.store.dispatch(AuthActions.logout());
     this.jwtAuthSvc.removeToken();
     this.signupComplete = true;
     localStorage.removeItem('selectedHouseholdId');
     localStorage.removeItem('userId');
+    localStorage.removeItem('username');
     this.router.navigate(['/login']);
   }
 

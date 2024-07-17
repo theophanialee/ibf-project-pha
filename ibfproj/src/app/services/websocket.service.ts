@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import { Client, Message, StompSubscription } from '@stomp/stompjs';
 import { ChatMessage } from '../models';
@@ -12,6 +12,7 @@ export type ListenerCallBack = (message: ChatMessage) => void;
 export class WebSocketService {
   private client: Client;
   private subscription: StompSubscription | undefined;
+  public messageReceived = new EventEmitter<Message>();
 
   private webSocketURL = environment.webSocketUrl;
 
@@ -40,9 +41,16 @@ export class WebSocketService {
 
   public sendMessage(message: Message): void {
     if (this.client && this.client.connected) {
+      const messageWithUserDetails = {
+        message: message,
+        userId: localStorage.getItem('userId'),
+        username: localStorage.getItem('username'),
+        householdId: localStorage.getItem('selectedHouseholdId'),
+      };
+
       this.client.publish({
         destination: '/app/chat',
-        body: JSON.stringify(message),
+        body: JSON.stringify(messageWithUserDetails),
       });
     } else {
       console.error('STOMP client is not connected.');
@@ -55,9 +63,14 @@ export class WebSocketService {
         '/topic/household',
         (message: Message) => {
           console.log(message);
-
           const chatMessage = this.mapToChatMessage(message);
-          fun(chatMessage);
+          const currentHouseholdId = localStorage.getItem(
+            'selectedHouseholdId'
+          );
+          if (chatMessage.householdId === currentHouseholdId) {
+            this.messageReceived.emit(message);
+            fun(chatMessage);
+          }
         }
       );
     } else {
@@ -66,7 +79,13 @@ export class WebSocketService {
           '/topic/household',
           (message: Message) => {
             const chatMessage = this.mapToChatMessage(message);
-            fun(chatMessage);
+            const currentHouseholdId = localStorage.getItem(
+              'selectedHouseholdId'
+            );
+            if (chatMessage.householdId === currentHouseholdId) {
+              this.messageReceived.emit(message);
+              fun(chatMessage);
+            }
           }
         );
       };
@@ -87,6 +106,8 @@ export class WebSocketService {
     return {
       username: body.username,
       content: body.message,
+      userId: body.userId,
+      householdId: body.householdId,
     };
   }
 }

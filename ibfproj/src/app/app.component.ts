@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { JwtauthService } from './services/jwtauth.service';
+import { WebSocketService } from './services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,21 @@ export class AppComponent {
   title = 'ibfproj';
   showNavbar: boolean = false;
 
-  constructor(private jwtAuthSvc: JwtauthService) {
+  constructor(
+    private jwtAuthSvc: JwtauthService,
+    private webSocketSvc: WebSocketService
+  ) {
     this.checkLocalStorage();
     window.addEventListener('storage', () => {
       this.checkLocalStorage();
+    });
+
+    this.webSocketSvc.listen((message) => {
+      console.log('Message received in notification service:', message);
+
+      this.webSocketSvc.listen((message) => {
+        alert(`New message from ${message.username}: ${message.content}`);
+      });
     });
   }
 

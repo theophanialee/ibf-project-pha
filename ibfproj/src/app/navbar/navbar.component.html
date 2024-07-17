@@ -1,8 +1,18 @@
+<style>
+  .relative:hover .username {
+    display: none;
+  }
+
+  .relative:hover .signout-text {
+    display: inline;
+  }
+</style>
+
 <nav class="bg-c1 p-4">
   <div class="container mx-auto flex justify-between items-center">
     <div class="flex items-center space-x-4">
       <a (click)="navigateTo('/home')" class="text-c2 text-lg font-semibold">
-        <img src="/assets/logo.png" alt="Logo" class="h-auto w-auto max-h-16">
+        <img src="/assets/logo.png" alt="Logo" class="h-auto w-auto max-h-16 hover:max-h-20">
       </a>
     </div>
 
@@ -10,9 +20,13 @@
       <a (click)="navigateTo('/chat')" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold">Chat</a>
       <a (click)="navigateTo('/household')" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold">Households</a>
       <a (click)="navigateTo('/household/members/add')" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold">Add members</a>
+      <a (click)="navigateTo('/notifications')" class="text-c2 hover:bg-c4 hover:text-white hover:text-lg p-4 text-sm font-semibold"><mat-icon>notifications</mat-icon></a>
     </div>
 
     <a (click)="navigateTo('/ingredient/search')" class="text-c1 text-2xl bg-c2 font-semibold rounded-full flex items-center justify-center w-12 h-12 hover:bg-c4 hover:text-white">+</a>
-    <button (click)="signout()" class="ml-4 text-c2 px-3 py-2 rounded-md text-sm font-medium hover:bg-c3 hover:text-white">Sign out</button>
+    <button (click)="signout()" class="ml-4 text-white px-3 py-2 rounded-md text-sm bg-c4 hover:bg-c3 relative">
+      <span class="username">Hello, {{ username }}!</span>
+      <span class="signout-text hidden">Sign out</span>
+    </button>
   </div>
 </nav>

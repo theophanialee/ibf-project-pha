@@ -9,4 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ChatMessage {
     private String message;
+    private String userId;
+    private String username;
+    private String householdId;
 }

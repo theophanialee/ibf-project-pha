@@ -16,6 +16,8 @@ export class ChatComponent {
   messages: ChatMessage[] = [];
   subs$!: Subscription;
   householdMembers: ExistingUser[] = [];
+  currentUserId: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private webSocketSvc: WebSocketService,
@@ -27,6 +29,7 @@ export class ChatComponent {
   }
 
   ngOnInit(): void {
+    this.currentUserId = localStorage.getItem('userId');
     this.webSocketSvc.listen((message) => {
       this.messages.push(message);
     });
@@ -49,7 +52,7 @@ export class ChatComponent {
   // }
 
   sendMessage(): void {
-    if (this.messageForm && this.messageForm.get('messageToSend')) {
+    if (this.messageForm) {
       const messageToSend = this.messageForm.get('messageToSend')!.value;
       if (messageToSend.trim()) {
         this.webSocketSvc.sendMessage(messageToSend);

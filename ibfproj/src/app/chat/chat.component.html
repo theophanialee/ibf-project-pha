@@ -22,10 +22,13 @@
   </div>
 
   <div class="bg-bg1 rounded-lg shadow-md p-4 mb-4 h-80 overflow-y-auto">
-    <div *ngFor="let message of messages" class="flex mb-2">
-      <div class="bg-gray-200 rounded-lg p-2">
-        <p>{{ message.username }}</p>
-        <p>{{ message.content }}</p>
+    <div *ngFor="let message of messages" 
+         class="flex mb-2"
+         [ngClass]="{'justify-end': message.userId === currentUserId, 'justify-start': message.userId !== currentUserId}">
+      <div 
+           >
+        <p class="font-bold">  {{ message.username }}: </p>
+        <p class="rounded-lg p-2"  [ngClass]="{'bg-c4 text-white': message.userId === currentUserId, 'bg-gray-200': message.userId !== currentUserId}">{{ message.content }}</p>
       </div>
     </div>
   </div>
