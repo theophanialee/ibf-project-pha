@@ -9,7 +9,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../models';
+import { ExistingUser, User } from '../models';
 
 @Component({
   selector: 'app-members-add',
@@ -51,7 +51,7 @@ export class MembersAddComponent {
     this.destroy$.complete();
   }
 
-  onSelectUser(user: User): void {
+  onSelectUser(user: ExistingUser): void {
     console.log('Selected user:', user);
 
     const householdId = localStorage.getItem('selectedHouseholdId');

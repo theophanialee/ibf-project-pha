@@ -59,6 +59,7 @@ export interface Listing {
 }
 
 export interface ExistingUser {
+  userId: string;
   username: string;
   email: string;
 }

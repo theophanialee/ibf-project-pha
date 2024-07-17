@@ -1,5 +1,21 @@
 <div class="container mx-auto p-4 bg-c1 rounded-lg relative">
   <h2 class="text-2xl font-bold mb-4 text-center text-c2">Chat Room</h2>
+<!-- 
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold text-c2 mb-2">Household Members</h3>
+
+    <div *ngIf="householdMembers.length === 0" class="text-gray-600">
+      No existing members found.
+    </div>
+
+    <ul *ngIf="householdMembers.length > 0" class="divide-y divide-gray-200">
+      <li *ngFor="let user of householdMembers" class="py-2 flex items-center">
+        <div class="ml-3">
+          <div class="text-sm font-medium text-gray-900">{{ user.username }}</div>
+        </div>
+      </li>
+    </ul>
+  </div> -->
 
   <div class="flex justify-between items-center mb-4">
     <h3 class="text-lg font-semibold text-c2">Chat Messages</h3>
@@ -7,8 +23,8 @@
 
   <div class="bg-bg1 rounded-lg shadow-md p-4 mb-4 h-80 overflow-y-auto">
     <div *ngFor="let message of messages" class="flex mb-2">
-      <div class="bg-white rounded-lg p-2">
-        <p><strong>{{ message.username }}</strong></p>
+      <div class="bg-gray-200 rounded-lg p-2">
+        <p>{{ message.username }}</p>
         <p>{{ message.content }}</p>
       </div>
     </div>

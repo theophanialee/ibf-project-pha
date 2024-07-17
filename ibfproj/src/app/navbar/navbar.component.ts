@@ -27,4 +27,8 @@ export class NavbarComponent {
     localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }

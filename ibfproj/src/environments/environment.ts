@@ -1,7 +1,9 @@
 export const environment = {
-  production: true,
-  backendUrl: 'https://pha-final-project-production.up.railway.app/api/v1',
-  webSocketUrl: 'wss://pha-final-project-production.up.railway.app/ws',
+  production: false,
+  webSocketUrl: 'ws://localhost:8080/ws',
   outboundPrefix: '/app',
   inboundPrefix: '/topic',
+  edamamAppId: 'c9c9375a',
+  edamamAppKey: '320281746675f9de7f8c50025d2fabe5',
+  backendURL: 'http://localhost:8080/api',
 };

@@ -18,7 +18,7 @@ public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final String SQL_SAVE_CREDS = "INSERT INTO usesr (user_id, username, email, password) VALUES (?, ?, ?, ?)";
+    private final String SQL_SAVE_CREDS = "INSERT INTO users (user_id, username, email, password) VALUES (?, ?, ?, ?)";
     private final String SQL_FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
 
 public boolean createUser(User createUser) {

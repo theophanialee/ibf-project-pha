@@ -2,12 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { Listing } from '../models';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryService {
-  private baseURL = 'http://localhost:8080/api/inventory';
+  private baseURL = `${environment.backendURL}/inventory`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -25,7 +26,9 @@ export class InventoryService {
   }
 
   getListingsByHousehold(householdId: string): Observable<Listing[]> {
-    return this.httpClient.get<Listing[]>(`${this.baseURL}/listings/${householdId}`);
+    return this.httpClient.get<Listing[]>(
+      `${this.baseURL}/listings/${householdId}`
+    );
   }
 
   deleteListing(listingId: string): Observable<void> {

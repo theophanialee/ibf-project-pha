@@ -52,7 +52,7 @@ public class HouseholdRepository {
             public HouseholdDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
                 HouseholdDetails household = new HouseholdDetails();
                 household.setHouseholdId(rs.getString("household_id"));
-                household.setUserId(rs.getString("user_id"));
+                // household.setUserId(rs.getString("user_id"));
                 household.setName(rs.getString("name"));
                 household.setDescription(rs.getString("description"));
 

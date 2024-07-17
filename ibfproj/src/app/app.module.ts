@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -31,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MembersAddComponent } from './members-add/members-add.component';
 import { authReducer } from './states/auth/auth.reducer';
 import { RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+// import { ServiceWorkerModule } from '@angular/service-worker';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -101,13 +102,19 @@ const appRoutes: Routes = [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { useHash: true }),
     StoreModule.forRoot({
       auth: authReducer,
       product: productReducer,
       household: householdReducer,
     }),
     MatIconModule,
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000',
+    // }),
   ],
   providers: [
     AuthGuard,

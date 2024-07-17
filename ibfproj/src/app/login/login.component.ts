@@ -68,4 +68,8 @@ export class LoginComponent implements OnInit {
       console.log('Invalid form data.');
     }
   }
+
+  navigateToSignup() {
+    this.router.navigate(['/signup']);
+  }
 }

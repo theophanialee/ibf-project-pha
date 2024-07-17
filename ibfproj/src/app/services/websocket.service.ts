@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Client, Message, StompSubscription } from '@stomp/stompjs';
 import { ChatMessage } from '../models';
+import { environment } from '../../environments/environment.prod';
 
 export type ListenerCallBack = (message: ChatMessage) => void;
 
@@ -12,9 +13,11 @@ export class WebSocketService {
   private client: Client;
   private subscription: StompSubscription | undefined;
 
+  private webSocketURL = environment.webSocketUrl;
+
   constructor() {
     this.client = new Client({
-      brokerURL: 'ws://localhost:8080/ws/websocket',
+      brokerURL: this.webSocketURL,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -51,6 +54,8 @@ export class WebSocketService {
       this.subscription = this.client.subscribe(
         '/topic/household',
         (message: Message) => {
+          console.log(message);
+
           const chatMessage = this.mapToChatMessage(message);
           fun(chatMessage);
         }
@@ -78,9 +83,10 @@ export class WebSocketService {
   }
 
   private mapToChatMessage(message: Message): ChatMessage {
+    const body = JSON.parse(message.body);
     return {
-      username: message.headers['username'],
-      content: message.body,
+      username: body.username,
+      content: body.message,
     };
   }
 }

@@ -10,7 +10,7 @@ COPY ibfproj/angular.json .
 COPY ibfproj/package*.json .
 COPY ibfproj/tsconfig*.json .
 COPY ibfproj/src src
-COPY ibfproj/proxy.config.json .
+# COPY ibfproj/proxy.config.json .
 COPY ibfproj/tailwind.config.js .
 
 # Install modules
@@ -28,7 +28,7 @@ COPY backend/.mvn .mvn
 COPY backend/src src
 
 # copy angular files to spring boot
-COPY --from=ngbuild /frontend/dist/ibfproj/ src/main/resources/static
+COPY --from=ngbuild /frontend/dist/ibfproj/browser/ src/main/resources/static
 
 # produce target/giphy-0.0.1-SNAPSHOT.jar
 RUN ./mvnw package -Dmaven.test.skip=true

@@ -5,12 +5,13 @@ import { AppState, ExistingUser, Household } from '../models';
 import { Store } from '@ngrx/store';
 import { JwtauthService } from './jwtauth.service';
 import { storeHouseholdId } from '../states/household/household.actions';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HouseholdService {
-  private baseURL = 'http://localhost:8080/api/household';
+  private baseURL = `${environment.backendURL}/household`;
 
   constructor(
     private httpClient: HttpClient,
@@ -69,6 +70,12 @@ export class HouseholdService {
     return this.httpClient.post<boolean>(
       `${this.baseURL}/members/add/${householdId}`,
       user
+    );
+  }
+
+  getAllMembersByHHId(householdId: string): Observable<ExistingUser[]> {
+    return this.httpClient.get<ExistingUser[]>(
+      `${this.baseURL}/members/${householdId}`
     );
   }
 }

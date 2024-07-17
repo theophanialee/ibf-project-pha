@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthResponse, User } from '../models';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private baseURL = 'http://localhost:8080/api/auth';
+  private baseURL = `${environment.backendURL}/auth`;
   isLoggedIn: boolean = false;
 
   constructor(private httpClient: HttpClient) {}

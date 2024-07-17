@@ -3,7 +3,8 @@ import { Message, StompSubscription } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
 import { WebSocketService } from '../services/websocket.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ChatMessage } from '../models';
+import { ChatMessage, ExistingUser } from '../models';
+import { HouseholdService } from '../services/household.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,8 +15,12 @@ export class ChatComponent {
   messageForm: FormGroup;
   messages: ChatMessage[] = [];
   subs$!: Subscription;
-
-  constructor(private fb: FormBuilder, private webSocketSvc: WebSocketService) {
+  householdMembers: ExistingUser[] = [];
+  constructor(
+    private fb: FormBuilder,
+    private webSocketSvc: WebSocketService,
+    private householdSvc: HouseholdService
+  ) {
     this.messageForm = this.fb.group({
       messageToSend: ['', Validators.required],
     });
@@ -25,7 +30,23 @@ export class ChatComponent {
     this.webSocketSvc.listen((message) => {
       this.messages.push(message);
     });
+
+    // this.getAllMembers();
   }
+
+  // getAllMembers(): void {
+  //   const householdId = localStorage.getItem('selectedHouseholdId');
+
+  //   if (householdId != null)
+  //     this.householdSvc.getAllMembersByHHId(householdId).subscribe(
+  //       (users: ExistingUser[]) => {
+  //         this.householdMembers = users;
+  //       },
+  //       (error) => {
+  //         console.error('Error fetching existing users:', error);
+  //       }
+  //     );
+  // }
 
   sendMessage(): void {
     if (this.messageForm && this.messageForm.get('messageToSend')) {

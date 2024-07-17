@@ -3,21 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ProductDetails } from '../models';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private baseURL = 'https://api.edamam.com/api';
-  private app_id = 'c9c9375a';
-  private app_key = '320281746675f9de7f8c50025d2fabe5';
 
-  private backendURL = 'http://localhost:8080/api';
+  private backendURL = environment.backendURL;
 
   constructor(private httpClient: HttpClient) {}
 
   searchIngredient(ingredient: string): Observable<ProductDetails[]> {
-    const url = `${this.baseURL}/food-database/v2/parser?app_id=${this.app_id}&app_key=${this.app_key}&ingr=${ingredient}`;
+    const url = `${this.baseURL}/food-database/v2/parser?app_id=${environment.edamamAppId}&app_key=${environment.edamamAppKey}&ingr=${ingredient}`;
 
     return this.checkBackendForProducts(ingredient).pipe(
       switchMap((products) => {

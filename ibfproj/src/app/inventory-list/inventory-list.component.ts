@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InventoryService } from '../services/inventory.service';
 import { Listing } from '../models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory-list',
@@ -10,7 +11,7 @@ import { Listing } from '../models';
 export class InventoryListComponent {
   inventoryList: Listing[] = [];
 
-  constructor(private inventorySvc: InventoryService) {}
+  constructor(private inventorySvc: InventoryService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchInventoryList();
@@ -41,5 +42,9 @@ export class InventoryListComponent {
         console.error('Error deleting listing:', error);
       }
     );
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 }

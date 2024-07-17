@@ -43,4 +43,8 @@ export class HouseholdComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }
