@@ -15,50 +15,45 @@ https://kitchen-kaki.up.railway.app/
 ## App summary
 
 # Dashboard
-
-![Recommended Recipes](screenshot/dashboard-recommended-recipes.png)  
-*Displays recommended recipes based on user preferences.*
-
-![Bump Expiring](screenshot/dashboard-bump-expiring.png)  
+![Bump Expiring](screenshots/dashboard-bump-expiring.png)  
 *Highlights expiring items to reduce waste.*
 
+![Recommended Recipes](screenshots/dashboard-recommended-recipes.png)  
+*Displays recommended recipes based on expiring items to facilitate users to clear their inventory.*
+
+
 # Household Management
-
-![Manage Inventory](screenshot/household-manage-inventory.png)  
-*Allows users to manage their household inventory.*
-
-![Edit Details](screenshot/household-edit-details.png)  
-*Enables editing of household details.*
-
-![Create Household](screenshot/household-create.png)  
+![Create Household](screenshots/household-create.png)  
 *Facilitates the creation of a new household.*
 
-![Household by ID](screenshot/household-by-id.png)  
-*Retrieves household information by ID.*
+![Household by ID](screenshots/household-by-id.png)  
+*Retrieves all household information associated with the logged in user as one user may belong to multiple households.*
 
-# Inventory Form
+![Manage Inventory](screenshots/household-manage-inventory.png)  
+*Allows users to manage their household inventory.*
 
-![Inventory Form](screenshot/inventory-form.png)  
-*User-friendly form for adding inventory items.*
+![Edit Details](screenshots/household-edit-details.png)  
+*Enables editing of household details.*
 
-# Notifications
 
-![Notifications](screenshot/notifications.png)  
-*Displays alerts and notifications for users.*
+![User Search](screenshots/user-search.png)  
+*Enables searching for other user profiles to add into household.*
 
-# Ingredient Search
+# Ingredient Management
 
-![Ingredient Search](screenshot/ingredient-search.png)  
-*Allows users to search for ingredients.*
+![Ingredient Search](screenshots/ingredient-search.png)  
+*Allows users to search for standard supermarket ingredients.*
 
-# User Search
+![Inventory Form](screenshots/inventory-form.png)  
+*User-friendly form where information from standard supermarket ingredients search are populated into their own form to directly add into their inventory. Potential expansion: barcode scan or photo recognition using AI.*
 
-![User Search](screenshot/user-search.png)  
-*Enables searching for user profiles.*
 
 # Live Chat
 
-![Live Chat](screenshot/live-chat.png)  
-*Provides real-time chat support for users.*
+![Live Chat](screenshots/live-chat.png)  
+*Provides real-time chat support for users. Work in progress: Chat history.*
 
+# Notifications
 
+![Notifications](screenshots/notifications.png)  
+*Work in progress: Displays alerts and notifications for users.*
